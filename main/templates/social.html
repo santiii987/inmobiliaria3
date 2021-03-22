@@ -1,0 +1,150 @@
+{% extends "base-admin.html" %}
+
+{% block content %}
+<div class="social-father" style="padding: 1rem;">
+    <div class="social-nav">
+        <ul class="nav">
+            <li class="nav-item">
+            <a style="border-radius: 5rem;background-color: rgba(255, 255, 255, 0.651); color: rgb(1, 167, 1);" class="nav-link active" href="/social/home"><i class="fas fa-envelope-open-text"></i> Correo {{ questions_amount}}</a>
+            </li>
+            <li class="nav-item">
+              <a style="border-radius: 5rem;background-color: rgba(255, 255, 255, 0.651); color: rgb(1, 167, 1);" class="nav-link" href="/social/saved"><i class="fas fa-bookmark"></i> Guardados {{ saved_amount }}</a>
+            </li>
+            <li class="nav-item">
+              <a style="border-radius: 5rem;background-color: rgba(255, 255, 255, 0.651); color: rgb(1, 167, 1);" class="nav-link" href="/social/trash"><i class="fas fa-dumpster"></i> Papelera {{ trash_amount }}</a>
+            </li>
+            <li class="nav-item">
+              <a style="border-radius: 5rem;background-color: rgba(255, 255, 255, 0.651); color: rgb(1, 167, 1);" class="nav-link" data-toggle="modal" data-target="#modalSubscribers" href="#"><i class="fas fa-address-book"></i> Subscriptores: {{subscribers_amount}}</a>
+            </li>
+            <li class="nav-item">
+              <a style="border-radius: 5rem;background-color: rgba(255, 255, 255, 0.651); color: rgb(1, 167, 1);" class="nav-link" onclick="help()" href="#">?</a>
+            </li>
+          </ul>
+          <br>
+    </div>
+    <script>
+      function help() {
+        var newLine = "\r\n"
+        var message = "1- Si se elimina un mensaje, el mismo se encontrará en la Papelera."
+        message += newLine;
+        message += "2- Si se desea eliminar un mensaje permanentemente, eliminarlo por segunda vez desde la Papelera.";
+        message += newLine;
+        message += "3- Si se quiere recuperar un mensaje de la Papelera, click en Guardar";
+        message += newLine;
+        message += "4- Si guardas un mensaje, el mismo se encontrará en Guardados.";
+        window.alert(message)
+      }
+    </script>
+    <div class="social-body" style="overflow-x: scroll;">
+        <table class="table table-striped" style="font-size: 90%;">
+            <thead>
+                <tr>
+                    <th class="social-message" scope="col"><i class="fas fa-envelope"></i></th>
+                    <th class="social-name" scope="col">Nombre/Propiedad</th>
+                    <th class="social-phone" scope="col">Tel/Cel</th>
+                    <th class="social-mail" scope="col">Correo</th>
+                    <th class="social-read" scope="col">Leido</th>
+                    <th class="social-answered" scope="col">Contestado</th>
+                    <th class="social-remove" scope="col">Eliminar</th>
+                    <th class="social-saved" scope="col">Guardar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for question in questions %}
+                
+                {% if question.read == False %}
+                <tr style="background-color: rgb(238, 224, 184);">
+                    {% else %}
+                    <tr style="background-color: rgb(255, 255, 255);">
+                    {% endif %}
+                    <td><a href="#" data-toggle="modal" data-target="#modal{{question.id}}" href="#">Mensaje</a></td>
+                    {% if question.property_id != none%}
+                    <td class="social-name"><a href="/profile-admin/{{question.property_id}}" target="_blank">Ver propiedad</a></td>
+                    {% else %}
+                    <td class="social-name"> {{question.complete_name|string}} </td>
+                    {% endif %}
+                    {% if question.phone %}
+                    <td class="social-phone"> {{question.phone}} </td>
+                    {% else %}
+                    <td class="social-phone">No</td>
+                    {% endif %}
+                    <td class="social-correo">{{question.mail}}</td>
+                    {% if question.read == True%}
+                    <td class="social-read"> <i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></td>
+                    {% else %}
+                    <td class="social-read"> No leido</td>
+                    {% endif %}
+                    {% if question.answered == True%}
+                    <td class="social-answered"><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></td>
+                    {% else %}
+                    <td class="social-answered"> No contestado</td>
+                    {% endif %}
+                    <td class="social-remove"><form action="/remove_question/{{question.id}}" method="POST"><button style="background-color: transparent; border: transparent;" type="submit"><i class="fas fa-trash-alt"></i></button></form> </td>
+                    {% if question.saved == True%}
+                    <td class="social-saved"><form action="/save_question/{{question.id}}" method="POST"><button style="background-color: transparent; border: transparent;" type="submit"><i class="fas fa-bookmark"></i></button></form> </td>
+                    {% else %}
+                    <td class="social-saved"><form action="/save_question/{{question.id}}" method="POST"><button style="background-color: transparent; border: transparent;" type="submit"><i class="far fa-bookmark"></i></button></form> </td>
+                    {% endif %}    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+    {% for question in questions %}
+    <div class="modal fade" id="modal{{question.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Mensaje de {{question.mail}}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>{{question.question}}</p>
+            </div>
+            <div class="modal-footer">
+            <form id="read" action="/readed/{{question.id}}" method="post">
+            <button type="submit" class="btn btn-secondary">Cerrar</button>
+            </form>
+            <form id="answered" action="/answered/{{question.id}}" method="post">
+            <button  onclick="submitAnswered({{question.id}})" class="btn button btn-primary"> Contestar</button>
+            <a id="{{question.id}}" style="display: none;" target="_blank" href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{question.mail}}"></a>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      {%endfor%}
+      <script>
+        function submitAnswered(input) {
+            console.log(input)
+            document.getElementById(input).click();
+            document.getElementById("answered").submit();
+        }
+    </script>
+
+<div class="modal fade" id="modalSubscribers" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Suscriptores</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <ul>
+          {% for subscriber in subscribers%}
+                <li>{{ subscriber.mail }}</li>
+            {% endfor %}
+        </ul>
+        </div>
+        <div class="modal-footer">
+        <button class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

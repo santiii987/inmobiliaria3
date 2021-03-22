@@ -1,0 +1,573 @@
+{% extends "base-admin.html" %}
+{% block content %}
+<div class="update-father">
+    <form method='POST' action="/edit-property/{{id}}" id='da-modal' enctype="multipart/form-data">
+        {{ form.csrf_token }}
+        <div>
+            {{form.destacado.label()}}
+            {%if form.destacado.errors%}
+            {{form.destacado()}}
+            {%for error in form.destacado.errors%}
+            <span>{{error}}</span>
+            {%endfor%}
+            {%else%}
+            {{form.destacado()}}
+            {%endif%}
+        </div>
+        <div>
+            {{form.titulo.label()}}
+            {%if form.titulo.errors%}
+            {{form.titulo()}}
+            {%for error in form.titulo.errors%}
+            <span>{{error}}</span>
+            {%endfor%}
+            {%else%}
+            {{form.titulo()}}
+            {%endif%}
+        </div>
+        <div>
+            {{form.ref.label()}}
+            {%if form.ref.errors%}
+            {{form.ref()}}
+            {%for error in form.ref.errors%}
+            <span><strong style="color: red;">{{error}}</strong></span>
+            {%endfor%}
+            {%else%}
+            {{form.ref()}}
+            {%endif%}
+        </div>
+        <div>
+            {{form.precio_dolares.label()}}
+            {%if form.precio_dolares.errors%}
+            {{form.precio_dolares()}}
+            {%for error in form.precio_dolares.errors%}
+            <span>{{error}}</span>
+            {%endfor%}
+            {%else%}
+            {{form.precio_dolares()}}
+            {%endif%}
+        </div>
+        <div>
+            {{form.precio_pesos.label()}}
+            {%if form.precio_pesos.errors%}
+            {{form.precio_pesos()}}
+            {%for error in form.precio_pesos.errors%}
+            <span>{{error}}</span>
+            {%endfor%}
+            {%else%}
+            {{form.precio_pesos()}}
+            {%endif%}
+        </div>
+        <div class="fotos" >
+            <div class="update-fotos"
+                style="overflow-x: scroll; text-align: center;border-top: rgba(128, 128, 128, 0.363) 1px solid;border-bottom: rgba(128, 128, 128, 0.363) 1px solid;padding: 1rem;">
+                <span><h3>Fotos:  <strong><span id = 'counter'>0</span>/15</span></h3></strong>
+                <div class="first-row"></div>
+                <div class="second-row"></div>
+                <div class="third-row"></div>
+                {% for foto in fotos %}
+                {% if loop.index >= 6 and loop.index < 11%}
+                <script>
+                $('.second-row').append("<div class='db_foto_up' style='padding: 0.5rem;' id = 'div{{loop.index}}'> \
+                    <div class='dropdown'>\
+                    <a href='#' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> \
+                    <img src='data:image/png;base64,{{foto}}' height='200' id='div-foto{{loop.index}}'  class='div-foto' width='200'>\
+                    </a>\
+                        <div style='padding:1rem;' class='dropdown-menu' aria-labelledby='dropdownMenuButton'>\
+                            <input type='file' class='change {{loop.index}} form-control-file' name = 'change_pic[]' onchange='changePic(this);'>Cambiar foto</input> \
+                            <a href='#' class='delete {{loop.index}} dropdown-item' onclick='deletePic(this);'>Eliminar foto</a>\
+                        </div>\
+                    </div>\
+                </div>"
+
+                )
+                </script>
+                {%elif loop.index >= 11%}
+                <script>
+                    $('.third-row').append("<div class='db_foto_up' style='padding: 0.5rem;' id = 'div{{loop.index}}'> \
+                        <div class='dropdown'>\
+                        <a href='#' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> \
+                    <img src='data:image/png;base64,{{foto}}' height='200' id='div-foto{{loop.index}}'  class='div-foto' width='200'>\
+                    </a>\
+                        <div style='padding:1rem;' class='dropdown-menu' aria-labelledby='dropdownMenuButton'>\
+                            <input type='file' class='change {{loop.index}} form-control-file' name = 'change_pic[]' onchange='changePic(this);'>Cambiar foto</input> \
+                            <a href='#' class='delete {{loop.index}} dropdown-item' onclick='deletePic(this);'>Eliminar foto</a>\
+                        </div>\
+                    </div>\
+                </div>"
+
+                    )
+                </script>
+                {%else%}
+                <script>
+                    $('.first-row').append("<div class='db_foto_up' style='padding: 0.5rem;' id = 'div{{loop.index}}'> \
+                        <div class='dropdown'>\
+                        <a href='#' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> \
+                        <img src='data:image/png;base64,{{foto}}' height='200' id='div-foto{{loop.index}}'  class='div-foto' width='200'>\
+                        </a>\
+                        <div style='padding:0.5rem;' class='dropdown-menu' aria-labelledby='dropdownMenuButton'>\
+                            <input style='width:22rem' type='file' class='change {{loop.index}} form-control-file' name='change_pic[]' onchange='changePic(this);'> \
+                            <a href='#' class='delete {{loop.index}} dropdown-item' onclick='deletePic(this);'>Eliminar foto</a>\
+                        </div>\
+                    </div >\
+                </div >")
+                </script>
+                {%endif%}
+                {%endfor%}
+            </div>
+        </div>
+        <div class="rest-of-data" style="padding: 1rem;">
+            <label for="fotos">Ingresar <strong class="calltoaction" style="color:red;" >Nuevas</strong> Fotos</label> <input id="fotos" multiple="" name="pics"
+                onchange="readURL(this);" type="file">
+        </div>
+
+<script>
+    collection = new DataTransfer();
+    collection_mapper = []
+    addedPhs = 0
+    change_params_array = []
+    fotos = document.getElementsByClassName('db_foto_up').length
+    console.log(fotos)
+    document.getElementById('counter').innerHTML = fotos
+    $('#da-modal').submit(function (e){
+        phsForm = document.getElementById('fotos')
+        phsForm.files = collection.files
+        changed_count = change_params_array.length
+        for(i=0;i<changed_count;i++){
+
+            param =  'change[]=' + change_params_array[i];
+            addParam(param);
+        }
+    });
+    function readURL(input) {
+        if (input.files) {
+            fotos_count = input.files.length
+            if (fotos + fotos_count > 15) {
+                window.alert("Sobrepasaste la cantidad, tienes " + (fotos + fotos_count - 15) + " fotos de mas")
+            } else {
+                var imgs = input.files
+                console.log(collection)
+                for (element of imgs) {
+                    fotos += 1
+                    collection.items.add(element)
+                    console.log(element)
+                    let reader = new FileReader();
+                    reader.onload = function (e) {
+                        addedPhs += 1
+                        collection_mapper.push(addedPhs)
+                        newPh = "<div class='new' id ='" + addedPhs + "' style='padding: 0.5rem;'> \
+                            <div class='dropdown'> \
+                            <a href='#' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> \
+                            <img src='" + e.target.result + "' class='div-foto" + addedPhs + "' height='200'> \
+                                </a> \
+                                    <div class='dropdown-menu' style='padding:0.5rem;' aria-labelledby='dropdownMenuButton'> \
+                                        <input style='width:22rem' type='file' class = '" + addedPhs + "' onchange='changeNew(this);'> \
+                                        <a href='#' class = '" + addedPhs + "' onclick='deleteNew(this);'>Eliminar foto</a> </div> </div> </div>"
+
+                        first = $('.first-row').children().length
+                        second = $('.second-row').children().length
+                        third = $('.third-row').children().length
+                        if (first < 5) {
+                            $('.first-row').append(newPh)
+                        } else if (second < 5) {
+                            $('.second-row').append(newPh)
+                        } else {
+                            $('.third-row').append(newPh)
+                        }
+                        counter = document.getElementById('counter').innerHTML = fotos;
+                    };
+                    reader.readAsDataURL(element);
+                }
+            }
+        }
+    }
+    function addParam(param) {
+        form = document.getElementById('da-modal')
+        if (form.getAttribute('action').indexOf('?') != -1) {
+            form_action = form.setAttribute('action', form.getAttribute('action') + '&' + param);
+            console.log('asdadasddsa0', form_action);
+        } else {
+            form_action = form.setAttribute('action', form.getAttribute('action') + '?' + param);
+            console.log(form_action);
+        }
+        console.log(form.getAttribute('action'))
+    }
+
+    function deletePic(input) {
+        delImg_aux = new DataTransfer();
+        fotos += -1
+        $('#counter').html(fotos)
+        param = input.classList[0] + '[]=' + input.classList[1];
+        addParam(param)
+        imgDel = document.getElementById('div' + input.classList[1]).remove();
+        check_duplicates = change_params_array.indexOf(input.classList[1])
+        if (check_duplicates != -1){
+            imgDel_bin = document.getElementsByClassName('change ' + input.classList[1])
+            changed_count = change_params_array.lenght()
+            for (i=0;i<changed_count;i++){
+                if(i != check_duplicates){
+                    delImg_aux.items.add(imgDel_bin.files[i])
+                }
+            }
+            imgDel_bin.files = delImg_aux.files
+            change_params_array.splice(check_duplicates,1)
+        }
+    }
+    function deleteNew(input) {
+        fotos += -1
+        $('#counter').html(fotos)
+        i = 0
+        while (collection_mapper[i] != input.classList[0]) {
+            i++
+        }
+        collection_aux = new DataTransfer
+        coll_len = collection.files.length
+        for (var j = 0; j < coll_len; j++) {
+            if (j == i) {
+                continue
+            } else {
+                collection_aux.items.add(collection.files[j])
+            }
+
+        }
+        collection = collection_aux
+        collection_mapper.splice(i, 1)
+        console.log(collection.files)
+        document.getElementById(input.classList[0]).remove();
+    }
+    function changeNew(input) {
+        if (input.files) {
+            reader = new FileReader
+            reader.onload = (e) => {
+                console.log(input.classList[0])
+                $('.div-foto' + input.classList[0]).attr('src', e.target.result)
+            }
+            reader.readAsDataURL(input.files[0])
+            i = 0
+            while (collection_mapper[i] != input.classList[0]) {
+                i++
+            }
+            collection_aux = new DataTransfer
+            coll_len = collection.files.length
+            for (var j = 0; j < coll_len; j++) {
+                if (j == i) {
+                    collection_aux.items.add(input.files[0])
+                } else {
+                    collection_aux.items.add(collection.files[j])
+                }
+
+            }
+            collection = collection_aux
+            console.log(collection_aux, collection.files, collection_mapper, input.files[0])
+        }
+
+    }
+    function changePic(input) {
+        if (input.files) {
+            check_duplicates = change_params_array.indexOf(input.classList[1])
+            if (check_duplicates === -1){
+                change_params_array.push(input.classList[1])
+            }
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('div-foto' + input.classList[1]).setAttribute('src', e.target.result);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+<label>Propietarios:</label>
+<select onchange="getProp(this.value)">
+    <option value='   '></option>
+    {% for propietario in propietarios%}
+    <!-- El nombre no puede tener espacios ni el apellido -->
+    <option value="{{propietario.nombre}} {{propietario.apellido}} {{propietario.telefono}} {{propietario.email}}">
+        {{propietario.nombre}} {{propietario.apellido}} {{propietario.telefono}}</option>
+    {%endfor%}
+</select>
+<div>
+    {{form.nombre.label()}}
+    {%if form.nombre.errors%}
+    {{form.nombre()}}
+    {%for error in form.nombre.errors%}
+    <span>{{error}}</span>
+    {%endfor%}
+    {%else%}
+    {{form.nombre()}}
+    {%endif%}
+</div>
+<div>
+    {{form.apellido.label()}}
+    {%if form.apellido.errors%}
+    {{form.apellido()}}
+    {%for error in form.apellido.errors%}
+    <span>{{error}}</span>
+    {%endfor%}
+    {%else%}
+    {{form.apellido()}}
+    {%endif%}
+</div>
+<div>
+    {{form.telefono.label()}}
+    {%if form.telefono.errors%}
+    {{form.telefono()}}
+    {%for error in form.telefono.errors%}
+    <span>{{error}}</span>
+    {%endfor%}
+    {%else%}
+    {{form.telefono()}}
+    {%endif%}
+</div>
+<div>
+    {{form.email.label()}}
+    {%if form.email.errors%}
+    {{form.email()}}
+    {%for error in form.email.errors%}
+    <span>{{error}}</span>
+    {%endfor%}
+    {%else%}
+    {{form.email()}}
+    {%endif%}
+</div>
+
+<script>
+    function getProp(prop) {
+        datos = prop.split(" ")
+        document.getElementById('nombre').value = datos[0]
+        document.getElementById("apellido").value = datos[1]
+        document.getElementById("email").value = datos[3]
+        document.getElementById("telefono").value = datos[2]
+        console.log(prop, document.getElementById('nombre'))
+
+    }
+</script>
+<div>
+    {{form.metraje_edificio.label()}}
+    {%if form.metraje_edificio.errors%}
+    {{form.metraje_edificio()}}
+    {%for error in form.metraje_edificio.errors%}
+    <span>{{error}}</span>
+    {%endfor%}
+    {%else%}
+    {{form.metraje_edificio()}}
+    {%endif%}
+</div>
+<div>
+    {{form.metraje_patio.label()}}
+    {%if form.metraje_patio.errors%}
+    {{form.metraje_patio()}}
+    {%for error in form.metraje_patio.errors%}
+    <span>{{error}}</span>
+    {%endfor%}
+    {%else%}
+    {{form.metraje_patio()}}
+    {%endif%}
+</div>
+<div>
+    {{form.operacion.label()}}
+    {%if form.operacion.errors%}
+    {{form.operacion()}}
+    {%for error in form.operacion.errors%}
+    <span>{{error}}</span>
+    {%endfor%}
+    {%else%}
+    {{form.operacion()}}
+    {%endif%}
+</div>
+<div>
+    {{form.tipo_propiedad.label()}}
+    {%if form.tipo_propiedad.errors%}
+    {{form.tipo_propiedad()}}
+    {%for error in form.tipo_propiedad.errors%}
+    <span>{{error}}</span>
+    {%endfor%}
+    {%else%}
+    {{form.tipo_propiedad()}}
+    {%endif%}
+</div>
+<div>
+    {{form.barrio.label()}}
+    {%if form.barrio.errors%}
+    {{form.barrio()}}
+    {%for error in form.barrio.errors%}
+    <span>{{error}}</span>
+    {%endfor%}
+    {%else%}
+    {{form.barrio()}}
+    {%endif%}
+</div>
+<div>
+    {{form.sobre.label()}}
+    {%if form.sobre.errors%}
+    {{form.sobre()}}
+    {%for error in form.sobre.errors%}
+    <span>{{error}}</span>
+    {%endfor%}
+    {%else%}
+    {{form.sobre()}}
+    {%endif%}
+</div>
+<div>
+    {{form.direccion.label()}}
+    {%if form.direccion.errors%}
+    {{form.direccion()}}
+    {%for error in form.direccion.errors%}
+    <span>{{error}}</span>
+    {%endfor%}
+    {%else%}
+    {{form.direccion()}}
+    {%endif%}
+</div>
+<div>
+    {{form.baños.label()}}
+    {%if form.baños.errors%}
+    {{form.baños()}}
+    {%for error in form.baños.errors%}
+    <span>{{error}}</span>
+    {%endfor%}
+    {%else%}
+    {{form.baños()}}
+    {%endif%}
+</div>
+<div>
+    {{form.estado.label()}}
+    {%if form.estado.errors%}
+    {{form.estado()}}
+    {%for error in form.estado.errors%}
+    <span>{{error}}</span>
+    {%endfor%}
+    {%else%}
+    {{form.estado()}}
+    {%endif%}
+</div>
+<div>
+    {{form.distancia_al_mar.label()}}
+    {%if form.distancia_al_mar.errors%}
+    {{form.distancia_al_mar()}}
+    {%for error in form.distancia_al_mar.errors%}
+    <span>{{error}}</span>
+    {%endfor%}
+    {%else%}
+    {{form.distancia_al_mar()}}
+    {%endif%}
+</div>
+<div>
+    {{form.dormitorios.label()}}
+    {%if form.dormitorios.errors%}
+    {{form.dormitorios()}}
+    {%for error in form.dormitorios.errors%}
+    <span>{{error}}</span>
+    {%endfor%}
+    {%else%}
+    {{form.dormitorios()}}
+    {%endif%}
+</div>
+<div>
+    {{form.orientacion.label()}}
+    {%if form.orientacion.errors%}
+    {{form.orientacion()}}
+    {%for error in form.orientacion.errors%}
+    <span>{{error}}</span>
+    {%endfor%}
+    {%else%}
+    {{form.orientacion()}}
+    {%endif%}
+</div>
+<div>
+    {{form.disposicion.label()}}
+    {%if form.disposicion.errors%}
+    {{form.disposicion()}}
+    {%for error in form.disposicion.errors%}
+    <span>{{error}}</span>
+    {%endfor%}
+    {%else%}
+    {{form.disposicion()}}
+    {%endif%}
+</div>
+<div>
+    {{form.garaje.label()}}
+    {%if form.garaje.errors%}
+    {{form.garaje()}}
+    {%for error in form.garaje.errors%}
+    <span>{{error}}</span>
+    {%endfor%}
+    {%else%}
+    {{form.garaje()}}
+    {%endif%}
+</div>
+<div>
+    {{form.n_plantas.label()}}
+    {%if form.n_plantas.errors%}
+    {{form.n_plantas()}}
+    {%for error in form.n_plantas.errors%}
+    <span>{{error}}</span>
+    {%endfor%}
+    {%else%}
+    {{form.n_plantas()}}
+    {%endif%}
+    </div>
+    <div>
+        {{form.financia.label()}}
+        {%if form.financia.errors%}
+        {{form.financia()}}
+        {%for error in form.financia.errors%}
+        <span>{{error}}</span>
+        {%endfor%}
+        {%else%}
+        {{form.financia()}}
+        {%endif%}
+    </div>
+    <div>
+        {{form.permuta.label()}}
+        {%if form.permuta.errors%}
+        {{form.permuta()}}
+        {%for error in form.permuta.errors%}
+        <span>{{error}}</span>
+        {%endfor%}
+        {%else%}
+        {{form.permuta()}}
+        {%endif%}
+    </div>
+
+    <br>
+    <div class="comfort-security" styles="background-color: black;">
+        <h3>Comfort:</h3>
+        <div class="comfort" styles="background-color: black;">
+            {{form.comfort.hidden_tag()}}
+            {%for comfort in form.comfort if comfort.widget.input_type != 'hidden'%}
+            {{comfort.label()}}
+            {{comfort()}}
+            {%endfor%}
+        </div>
+        <br>
+        <h3>Seguridad:</h3>
+        <div class="security">
+            {{form.seguridad.hidden_tag()}}
+            {%for seguridad in form.seguridad if seguridad.widget.input_type != 'hidden'%}
+            {{seguridad.label()}}
+            {{seguridad()}}
+            {%endfor%}
+        </div>
+    </div>
+    <br>
+    <h3>Descripción:</h3>
+    <div>
+        {%if form.descripcion.errors%}
+        {{form.descripcion()}}
+        {%for error in form.descripcion.errors%}
+        <span>{{error}}</span>
+        {%endfor%}
+        {%else%}
+        {{form.descripcion()}}
+        {%endif%}
+    </div>
+    <div class="modal-footer">
+        <a type="button" href="/admin/home">Cerrar</a>
+        {{form.submit()}}
+        <div>
+
+        </div>
+        </form>
+    </div>
+  
+    {% endblock %}

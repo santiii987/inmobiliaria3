@@ -1,0 +1,632 @@
+{% extends "base-admin.html" %}
+{% block content %}
+<div class="update-father">
+    <form class="insert-form" id="insertForm" method='POST' action="/insertation" id='da-modal' enctype="multipart/form-data"
+        onsubmit='groupPhs();'>
+        <div class="column" style="margin-bottom: 1rem;"><!-- Column 1 -->
+        {{ form.csrf_token }}
+        
+        <div>
+            {{form.destacado.label()}}
+            {%if form.destacado.errors%}
+            {{form.destacado()}}
+            {%for error in form.destacado.errors%}
+            <strong style="color: red;"><span>{{error}}</span></strong>
+            {%endfor%}
+            {%else%}
+            {{form.destacado()}}
+            {%endif%}
+        </div>
+        <div class="group"><!-- Group 1 -->
+        <div>
+            <label for="">Ref:</label>
+            <input onkeyup="checkRefs()" name="ref" id="actual_ref" type="text" maxlength="5"><strong id="availability"></strong>
+            <!--<br>
+             <a href="#" onclick="">Chequear disponibilidad de referencia.</a> 
+            <br><br>-->
+            <select style="display: none;"  id="refs" multiple></select>
+                {% for property in get_properties %}
+                <option style="display: none;" class="ref_taken" value="{{property.ref}}">{{property.ref}}</option>
+                {% endfor %}
+              </select>
+        </div>
+
+        <div>
+            <label for="">Titulo:</label>
+            <input name="titulo" id="titulo" type="text" maxlength="30">
+        </div>
+        <div>
+            {{form.operacion.label()}}
+            {%if form.operacion.errors%}
+            {{form.operacion()}}
+            {%for error in form.operacion.errors%}
+            <strong style="color: red;"><span>{{error}}</span></strong>
+            {%endfor%}
+            {%else%}
+            {{form.operacion()}}
+            {%endif%}
+        </div>
+        <div>
+            {{form.precio_dolares.label()}}
+            {%if form.precio_dolares.errors%}
+            {{form.precio_dolares()}}
+            {%for error in form.precio_dolares.errors%}
+            <strong style="color: red;"><span>{{error}}</span></strong>
+            {%endfor%}
+            {%else%}
+            {{form.precio_dolares()}}
+            {%endif%}
+        </div>
+
+        <div>
+            {{form.precio_pesos.label()}}
+            {%if form.precio_pesos.errors%}
+            {{form.precio_pesos()}}
+            {%for error in form.precio_pesos.errors%}
+            <strong style="color: red;"><span>{{error}}</span></strong>
+            {%endfor%}
+            {%else%}
+            {{form.precio_pesos()}}
+            {%endif%}
+        </div>
+        </div><!-- /Group 1 -->
+        <div class="line"></div>
+        <div class="fotos" >
+            <div class="update-fotos"
+                style="overflow-x: scroll; text-align: center;border-top: rgba(128, 128, 128, 0.363) 1px solid;border-bottom: rgba(128, 128, 128, 0.363) 1px solid;padding: 1rem;">
+                <span><h3>Fotos:  <strong><span id = "counter">0</span>/15</span></h3><span id="picErr"></span></strong>
+                <div class="first-row"></div>
+                <div class="second-row"></div>
+                <div class="third-row"></div>
+            </div>
+        </div>
+        <div class="rest-of-data" style="padding: 1rem;">
+            <label for="fotos"><strong>Ingresar Fotos</strong></label> <input required="required" id="fotos" multiple="" name="fotos"
+                onchange="readURL(this);" type="file">
+        </div>
+        <a id="next-one" onclick="nextStep(2)" style="color: rgb(1, 167, 1);" href="#column-two">| Siguiente >></a>
+    </div><!-- /Column 1 -->
+<script>
+    collection = new DataTransfer();
+    collection_mapper = []
+    addedPhs = 0
+    fotos = document.getElementsByClassName('db_foto_up').length
+    console.log("Fotos: ", fotos)
+    document.getElementById('counter').innerHTML = fotos
+    function groupPhs() {
+        phsForm = document.getElementById('fotos')
+        phsForm.files = collection.files
+    }
+    function readURL(input) {
+        if (input.files) {
+            fotos_count = input.files.length
+            if (fotos + fotos_count > 15) {
+                window.alert("Sobrepasaste la cantidad, tienes " + (fotos + fotos_count - 15) + " fotos de mas")
+            } else {
+                var imgs = input.files
+                console.log(collection)
+                for (element of imgs) {
+                    fotos += 1
+                    collection.items.add(element)
+                    console.log(element)
+                    let reader = new FileReader();
+                    reader.onload = function (e) {
+                        addedPhs += 1
+                        collection_mapper.push(addedPhs)
+                        newPh = "<div class='new' id ='" + addedPhs + "' style='padding: 0.5rem;'> \
+                            <div class='dropdown'> \
+                            <a href='#' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> \
+                            <img src='" + e.target.result + "' class='div-foto" + addedPhs + "' height='200'> \
+                                </a> \
+                                    <div class='dropdown-menu' style='padding:0.5rem;' aria-labelledby='dropdownMenuButton'> \
+                                        <input style='width:22rem' type='file' class = '" + addedPhs + "' onchange='changeNew(this);'> \
+                                        <a href='#' class = '" + addedPhs + "' onclick='deleteNew(this);'>Eliminar foto</a> </div> </div> </div>"
+
+                        first = $('.first-row').children().length
+                        second = $('.second-row').children().length
+                        third = $('.third-row').children().length
+                        if (first < 5) {
+                            $('.first-row').append(newPh)
+                        } else if (second < 5) {
+                            $('.second-row').append(newPh)
+                        } else {
+                            $('.third-row').append(newPh)
+                        }
+                        counter = document.getElementById('counter').innerHTML = fotos;
+                    };
+                    reader.readAsDataURL(element);
+                }
+            }
+        }
+    }
+
+    function deleteNew(input) {
+        fotos += -1
+        $('#counter').html(fotos)
+        i = 0
+        while (collection_mapper[i] != input.classList[0]) {
+            i++
+        }
+        collection_aux = new DataTransfer
+        coll_len = collection.files.length
+        for (var j = 0; j < coll_len; j++) {
+            if (j == i) {
+                continue
+            } else {
+                collection_aux.items.add(collection.files[j])
+            }
+
+        }
+        collection = collection_aux
+        collection_mapper.splice(i, 1)
+        console.log(collection.files)
+        document.getElementById(input.classList[0]).remove();
+    }
+    function changeNew(input) {
+        if (input.files) {
+            reader = new FileReader
+            reader.onload = (e) => {
+                console.log(input.classList[0])
+                $('.div-foto' + input.classList[0]).attr('src', e.target.result)
+            }
+            reader.readAsDataURL(input.files[0])
+            i = 0
+            while (collection_mapper[i] != input.classList[0]) {
+                i++
+            }
+            collection_aux = new DataTransfer
+            coll_len = collection.files.length
+            for (var j = 0; j < coll_len; j++) {
+                if (j == i) {
+                    collection_aux.items.add(input.files[0])
+                } else {
+                    collection_aux.items.add(collection.files[j])
+                }
+
+            }
+            collection = collection_aux
+            console.log(collection_aux, collection.files, collection_mapper, input.files[0])
+        }
+
+    }
+</script>
+
+<script>
+function nextStep(step) {
+    //Step 2
+    var ref = document.getElementById("actual_ref");
+    var usd = document.getElementById("precio_dolares");
+    var pesos = document.getElementById("precio_pesos");
+    var title = document.getElementById("titulo");
+    var nextOne = document.getElementById("next-one");
+    var fotos = document.getElementById("counter");
+    var form = document.getElementById("insertForm");
+    var availability = document.getElementById("availability");
+    //Step 3
+    var name = document.getElementById("nombre");
+    var lastname = document.getElementById("apellido");
+    var tel = document.getElementById("telefono");
+    var email = document.getElementById("email");
+    var nextTwo = document.getElementById("next-two");
+    //Step 4
+    var metrajeEdif = document.getElementById("metraje_edificio");
+    var direccion = document.getElementById("direccion");
+    var nextThree = document.getElementById("next-three");
+    //Step 5
+    
+    if (step == 2) {
+        if (fotos.innerHTML == 0) {
+            window.alert("Es necesario agregar al menos una foto");
+        } else if (ref.value == "" ) {
+            window.alert("Inserta una referencia");
+            console.log(ref.value)
+        } else if (title.value == "") {
+            window.alert("Escribe un título para la propiedad");
+            console.log(title.innerHTML)
+        } else if (usd.value == "" && pesos.value == "") {
+            window.alert("Inserta el precio de la propiedad");
+            console.log("Dolares: ",usd.value,"Pesos: ", pesos.value)
+        } 
+        else {
+            document.getElementById("column-two").classList.remove("inactive");
+            document.getElementById("column-two").classList.add("column");
+            nextOne.remove()
+        }
+        
+        
+    } else if (step == 3) {
+        if (name.value == "") {
+            window.alert("Ingresa nombre de propietario");
+        } else if (lastname.value == "") {
+            window.alert("Inserta apellido del propietario");
+        } else if (tel.value == "") {
+            window.alert("Escribe un numero de telefono de propietario");
+        } else if (email.value == "") {
+            window.alert("Inserta email del propietario");
+        }
+        else {
+            document.getElementById("column-three").classList.remove("inactive");
+            document.getElementById("column-three").classList.add("column");
+            nextTwo.remove()
+        }
+        
+    } else if (step == 4) {
+        if (metrajeEdif.value == "") {
+            window.alert("Ingresa metraje de planta");
+        } else if (direccion.value == "") {
+            window.alert("Escribe una dirección");
+        } else {
+        document.getElementById("column-four").classList.remove("inactive");
+        document.getElementById("column-four").classList.add("column");
+        nextThree.remove()
+        // Insert div
+        document.getElementById("insert-button").classList.remove("inactive");
+        //document.getElementById("insert-button").classList.add("active");
+    } 
+}
+}
+</script>
+
+<div id="column-two" class="fade-in inactive" style="margin-bottom: 1rem;"><!-- Column 2 -->
+<label>Propietarios:</label>
+<select onchange="getProp(this.value)" style="margin-bottom: 0.5rem;">
+    <option value='   '></option>
+    {% for propietario in propietarios%}
+    <!-- El nombre no puede tener espacios ni el apellido -->
+    <option value="{{propietario.nombre}} {{propietario.apellido}} {{propietario.telefono}} {{propietario.email}}">
+        {{propietario.nombre}} {{propietario.apellido}} {{propietario.telefono}}</option>
+    {%endfor%}
+</select>
+<div class="line"></div>
+<div class="group"><!-- Group 1 -->
+<div>
+    {{form.nombre.label()}}
+    {%if form.nombre.errors%}
+    {{form.nombre()}}
+    {%for error in form.nombre.errors%}
+    <strong style="color: red;"><span>{{error}}</span></strong>
+    {%endfor%}
+    {%else%}
+    {{form.nombre()}}
+    {%endif%}
+</div>
+<div>
+    {{form.apellido.label()}}
+    {%if form.apellido.errors%}
+    {{form.apellido()}}
+    {%for error in form.apellido.errors%}
+    <strong style="color: red;"><span>{{error}}</span></strong>
+    {%endfor%}
+    {%else%}
+    {{form.apellido()}}
+    {%endif%}
+</div>
+<div>
+    {{form.telefono.label()}}
+    {%if form.telefono.errors%}
+    {{form.telefono()}}
+    {%for error in form.telefono.errors%}
+    <strong style="color: red;"><span>{{error}}</span></strong>
+    {%endfor%}
+    {%else%}
+    {{form.telefono()}}
+    {%endif%}
+</div>
+<div>
+    {{form.email.label()}}
+    {%if form.email.errors%}
+    {{form.email()}}
+    {%for error in form.email.errors%}
+    <strong style="color: red;"><span>{{error}}</span></strong>
+    {%endfor%}
+    {%else%}
+    {{form.email()}}
+    {%endif%}
+</div>
+</div><!-- /Group 1 -->
+<a id="next-two" onclick="nextStep(3)" style="color: rgb(1, 167, 1);" href="#column-three">| Siguiente >></a>
+</div>
+
+<div id="column-three" class="fade-in inactive" style="margin-bottom: 1rem;"><!-- Column 3 -->
+<script>
+    function getProp(prop) {
+        datos = prop.split(" ")
+        document.getElementById('nombre').value = datos[0]
+        document.getElementById("apellido").value = datos[1]
+        document.getElementById("email").value = datos[3]
+        document.getElementById("telefono").value = datos[2]
+        console.log(prop, document.getElementById('nombre'))
+
+    }
+</script>
+<div class="group"><!-- Group 1 -->
+<div>
+    {{form.metraje_edificio.label()}}
+    {%if form.metraje_edificio.errors%}
+    {{form.metraje_edificio()}}
+    {%for error in form.metraje_edificio.errors%}
+    <strong style="color: red;"><span>{{error}}</span></strong>
+    {%endfor%}
+    {%else%}
+    {{form.metraje_edificio()}}
+    {%endif%}
+</div>
+<div>
+    {{form.metraje_patio.label()}}
+    {%if form.metraje_patio.errors%}
+    {{form.metraje_patio()}}
+    {%for error in form.metraje_patio.errors%}
+    <strong style="color: red;"><span>{{error}}</span></strong>
+    {%endfor%}
+    {%else%}
+    {{form.metraje_patio()}}
+    {%endif%}
+</div>
+<div>
+    {{form.direccion.label()}}
+    {%if form.direccion.errors%}
+    {{form.direccion()}}
+    {%for error in form.direccion.errors%}
+    <strong style="color: red;"><span>{{error}}</span></strong>
+    {%endfor%}
+    {%else%}
+    {{form.direccion()}}
+    {%endif%}
+</div>
+<div>
+    {{form.barrio.label()}}
+    {%if form.barrio.errors%}
+    {{form.barrio()}}
+    {%for error in form.barrio.errors%}
+    <strong style="color: red;"><span>{{error}}</span></strong>
+    {%endfor%}
+    {%else%}
+    {{form.barrio()}}
+    {%endif%}
+</div>
+</div><!-- Group 1 -->
+<div class="line"></div>
+<div class="group"><!-- Group 2 -->
+<div>
+    {{form.tipo_propiedad.label()}}
+    {%if form.tipo_propiedad.errors%}
+    {{form.tipo_propiedad()}}
+    {%for error in form.tipo_propiedad.errors%}
+    <strong style="color: red;"><span>{{error}}</span></strong>
+    {%endfor%}
+    {%else%}
+    {{form.tipo_propiedad()}}
+    {%endif%}
+</div>
+<div>
+    {{form.estado.label()}}
+    {%if form.estado.errors%}
+    {{form.estado()}}
+    {%for error in form.estado.errors%}
+    <strong style="color: red;"><span>{{error}}</span></strong>
+    {%endfor%}
+    {%else%}
+    {{form.estado()}}
+    {%endif%}
+</div>
+<div>
+    {{form.disposicion.label()}}
+    {%if form.disposicion.errors%}
+    {{form.disposicion()}}
+    {%for error in form.disposicion.errors%}
+    <strong style="color: red;"><span>{{error}}</span></strong>
+    {%endfor%}
+    {%else%}
+    {{form.disposicion()}}
+    {%endif%}
+</div>
+
+
+    <div>
+        {{form.sobre.label()}}
+        {%if form.sobre.errors%}
+        {{form.sobre()}}
+        {%for error in form.sobre.errors%}
+        <strong style="color: red;"><span>{{error}}</span></strong>
+        {%endfor%}
+        {%else%}
+        {{form.sobre()}}
+        {%endif%}
+    </div>
+    
+    <div>
+        {{form.baños.label()}}
+        {%if form.baños.errors%}
+        {{form.baños()}}
+        {%for error in form.baños.errors%}
+        <strong style="color: red;"><span>{{error}}</span></strong>
+        {%endfor%}
+        {%else%}
+        {{form.baños()}}
+        {%endif%}
+    </div>
+</div><!-- /Group 2 -->
+<div class="line"></div>
+<div class="group"><!-- Group 3 -->
+<div>
+    {{form.distancia_al_mar.label()}}
+    {%if form.distancia_al_mar.errors%}
+    {{form.distancia_al_mar()}}
+    {%for error in form.distancia_al_mar.errors%}
+    <strong style="color: red;"><span>{{error}}</span></strong>
+    {%endfor%}
+    {%else%}
+    {{form.distancia_al_mar()}}
+    {%endif%}
+</div>
+<div>
+    {{form.dormitorios.label()}}
+    {%if form.dormitorios.errors%}
+    {{form.dormitorios()}}
+    {%for error in form.dormitorios.errors%}
+    <strong style="color: red;"><span>{{error}}</span></strong>
+    {%endfor%}
+    {%else%}
+    {{form.dormitorios()}}
+    {%endif%}
+</div>
+<div>
+    {{form.orientacion.label()}}
+    {%if form.orientacion.errors%}
+    {{form.orientacion()}}
+    {%for error in form.orientacion.errors%}
+    <strong style="color: red;"><span>{{error}}</span></strong>
+    {%endfor%}
+    {%else%}
+    {{form.orientacion()}}
+    {%endif%}
+</div>
+
+
+<div>
+    {{form.garaje.label()}}
+    {%if form.garaje.errors%}
+    {{form.garaje()}}
+    {%for error in form.garaje.errors%}
+    <strong style="color: red;"><span>{{error}}</span></strong>
+    {%endfor%}
+    {%else%}
+    {{form.garaje()}}
+    {%endif%}
+</div>
+
+<div>
+    {{form.n_plantas.label()}}
+    {%if form.n_plantas.errors%}
+    {{form.n_plantas()}}
+    {%for error in form.n_plantas.errors%}
+    <strong style="color: red;"><span>{{error}}</span></strong>
+    {%endfor%}
+    {%else%}
+    {{form.n_plantas()}}
+    {%endif%}
+    </div>
+</div><!-- /Group 3 -->
+<div class="line"></div>
+    <div>
+        {{form.financia.label()}}
+        {%if form.financia.errors%}
+        {{form.financia()}}
+        {%for error in form.financia.errors%}
+        <strong style="color: red;"><span>{{error}}</span></strong>
+        {%endfor%}
+        {%else%}
+        {{form.financia()}}
+        {%endif%}
+    </div>
+    <div>
+        {{form.permuta.label()}}
+        {%if form.permuta.errors%}
+        {{form.permuta()}}
+        {%for error in form.permuta.errors%}
+        <strong style="color: red;"><span>{{error}}</span></strong>
+        {%endfor%}
+        {%else%}
+        {{form.permuta()}}
+        {%endif%}
+    </div>
+<a id="next-three" onclick="nextStep(4), insertButton()" style="color: rgb(1, 167, 1);" href="#column-four">| Siguiente >></a>
+</div><!-- /Column 4 -->
+
+<div id="column-four" class="fade-in inactive" style="margin-bottom: 1rem;"><!-- Column 4 -->
+    <br>
+    
+    <div class="comfort-security" styles="background-color: black;">
+        <div class="group">
+            <div>
+        <h3>Confort:</h3>
+        <div class="comfort" styles="background-color: black;">
+            {{form.comfort.hidden_tag()}}
+            {%for comfort in form.comfort if comfort.widget.input_type != 'hidden'%}
+            {{comfort.label()}}
+            {{comfort()}}<br>
+            {%endfor%}
+        </div>
+    </div>
+        <br>
+        <div>
+        <h3>Seguridad:</h3>
+        <div class="security">
+            {{form.seguridad.hidden_tag()}}
+            {%for seguridad in form.seguridad if seguridad.widget.input_type != 'hidden'%}
+            {{seguridad.label()}}
+            {{seguridad()}}<br>
+            {%endfor%}
+        </div>
+        <div class="profile-line"></div>
+        <br>
+    <h3>Descripción:</h3>
+    <div>
+        {%if form.descripcion.errors%}
+        {{form.descripcion(onkeyup(document.getElementById("insert-button").classList.remove("invisible")))}}
+        {%for error in form.descripcion.errors%}
+        <strong style="color: red;"><span>{{error}}</span></strong>
+        {%endfor%}
+        {%else%}
+        {{form.descripcion()}}
+        {%endif%}
+    </div>
+    </div>
+    </div>
+
+    </div>
+    
+</div><!-- /Column 4 -->
+</div>
+</form>
+<script>
+
+    function checkRefs() {
+                      var taken = document.getElementById("taken");
+                      var availability = document.getElementById("availability");
+                      var actualRef = document.getElementById("actual_ref");
+                      var refs = document.querySelectorAll(".ref_taken");
+                      refsArray = []
+                         refs.forEach(element => {
+                          var elem = String(element.innerHTML)
+                          refsArray.push(elem.toLowerCase())
+                      });
+                      console.log("Refs Array: ",refsArray)
+                      console.log("Actual ref: ",actualRef.value.toLowerCase())
+                      if (actualRef.value != "") {
+                        if (refsArray.indexOf(actualRef.value.toLowerCase()) > -1) {
+                            availability.value = 0
+                            console.log("Availability: ", availability.value)
+                            availability.innerHTML = " ❌ Ref ya utilizada."
+                            availability.style.color = "red"
+                            actualRef.style.border = "red 1px solid"
+                        } else {
+                            availability.value = 1
+                            console.log("Availability: ", availability.value)
+                            availability.innerHTML = " ✔ Ref disponible."
+                            availability.style.color = "rgb(1, 167, 1)"
+                            actualRef.style.border = "rgb(1, 167, 1) 2px solid"
+                        
+                      } 
+                      } else {
+                        availability.innerHTML = " Escribe una referencia primero."
+                        availability.style.color = "black"
+                      }
+                      
+                  }
+    function checkDescription() {
+        var form = document.getElementById("insertForm");
+        var descripcion = document.getElementById("descripcion");
+        if (descripcion.value == "") {
+            window.alert("Ingresa una descripción");
+        } else {
+            form.submit() 
+        }
+    }
+
+</script>
+<div id="testing" class="modal-footer">
+    <a type="button" class="btn button contact-enviar" style="background-color:grey" href="/admin/home">Cerrar</a>
+    <a type="button" id="insert-button" onclick="checkDescription()" style="color: white;" class="btn button contact-enviar inactive">Insertar</a>
+</div>
+    {% endblock %}

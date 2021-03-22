@@ -1,0 +1,97 @@
+{% extends "base-admin.html"%}
+{% block content%}
+<div class="father" style="display: flex;flex-direction: column;">
+    <div class="child" style="overflow-x: scroll;"> 
+        <h4><i class="far fa-file-alt"></i> Datos del dueño</h4> 
+        <table class="table table-striped" style="overflow-x: scroll;font-size: 90%;">
+            <thead>
+                <tr>
+                    <th class="social-name" scope="col">Nombre y Apellido</th>
+                    <th class="social-phone" scope="col">Celular/Telefono</th>
+                    <th class="social-mail" scope="col">Correo</th>
+                    <th class="social-remove" scope="col">Eliminar</th>
+                    <th class="social-saved" scope="col">Modificar</th>
+                </tr>
+            </thead>
+            <tbody style="background-color: white;">
+              {% if not propietario %}
+                <tr style="background-color: rgb(255, 255, 255);">
+                  <td class="social-name" > Añadir usuario <strong style="color: rgb(1, 167, 1);"><a href="#" data-toggle="modal" data-target="#modalInsertPropietario">(click en "Añadir")</a></strong> </td>
+                  <td class="social-phone">...</td>
+                  <td class="social-correo" name="owner-email">ejemplo@correo.com</td>
+                  <td class="social-remove"><i class="fas fa-trash-alt" aria-disabled="true" style="color: rgb(190, 190, 190);"></i></td>
+                  <td aria-disabled="true" style="color: rgb(190, 190, 190);">Modificar</td>   
+              </tr>
+              {%else%}
+                  <tr style="background-color: rgb(255, 255, 255);" ></tr>
+                      <td class="social-name"><a href="#modalProperties{{propietario.id}}" data-toggle="modal" data-target="#modalProperties{{propietario.id}}">{{propietario.nombre}} {{propietario.apellido}}</a></td>
+                      {% if propietario.telefono %}
+                      <td name="owner-phone" class="social-phone"> {{propietario.telefono}} </td>
+                      {% else %}
+                      <td name="owner-phone" class="social-phone">No</td>
+                      {% endif %}
+                      <td class="social-correo" name="owner-email">{{propietario.email}}</td>
+                      <td class="social-remove"><form id="remove-form{{propietario.id}}" action="/remove_owner/{{propietario.id}}" method="POST"></form><button style="background-color: transparent; border: transparent;" onclick="removeConfir({{propietario.id}})"><i class="fas fa-trash-alt"></i></button></td>
+                      <td><a href="#" data-toggle="modal" data-target="#modal{{propietario.id}}" href="#">Modificar</a></td>   
+                  </tr>
+            {% endif %}
+          </tbody>
+        </table>
+        <h4><i class="fas fa-building"></i> Propiedades del dueño </h4>
+        {% if propietario %}
+            {% if propietario.properties%}
+              <table class="table table-striped" style="overflow-x: scroll;font-size: 90%;">
+                <thead>
+                    <tr>
+                        <th scope="col">Propiedad</th>
+                        <th scope="col">Ref</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Venta</th>
+                        <th scope="col">Alquiler</th>
+                        <th scope="col">Propietario</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody >
+                  {% for propiedades in propietario.properties %}
+                    <tr>
+                        {% if propiedades.foto != none %}
+                        <td style="vertical-align: middle;" class="inmueble"><img src="data:image/png;base64,{{ propiedades.foto }}" alt=""
+                                style="width: 150px;"><br> {{ propiedades.direccion }}</td>
+                        {% else %}
+                        <td style="vertical-align: middle;" class="inmueble"> Sin foto {{ propiedades.direccion }}</td>
+                        {% endif %}
+                        <td style="vertical-align: middle;" class="titulo">{{ propiedades.tipo_propiedad.tipo_propiedad }} {{ propiedades.barrio.barrio }}</td>
+                        <td class="tipo" style="vertical-align: middle;">{{ propiedades.tipo_propiedad.tipo_propiedad }}</td>
+                        {% if propiedades.operaciones.operacion == "Venta" %}
+                            {%if propiedades.precio_dolares != none%}
+                            <td style="vertical-align: middle;" class="$venta">U$S {{ propiedades.precio_dolares }}</td>
+                            <td style="vertical-align: middle;" class="$alquiler">No</td>
+                            {% else %}
+                            <td style="vertical-align: middle;" class="$venta">$ {{ propiedades.precio_pesos }}</td>
+                            <td style="vertical-align: middle;" class="$alquiler">No</td>
+                            {%endif%}
+                        {% else %}
+                            {%if propiedades.precio_pesos != none %}
+                            <td style="vertical-align: middle;" class="$venta">No</td>
+                            <td style="vertical-align: middle;" class="$alquiler">$ {{ propiedades.precio_pesos }}</td>
+                            {% else %}
+                            <td style="vertical-align: middle;" class="$venta">No</td>
+                            <td style="vertical-align: middle;" class="$alquiler">U$S {{ propiedades.precio_dolares }}</td>
+                            {% endif %}
+                        {% endif %}
+                        <td style="vertical-align: middle;" class="propietario">{{ propiedades.propietario.nombre}} {{propiedades.propietario.apellido }}</td>
+                        <td style="vertical-align: middle;" ><a class="edit" href="/update/{{propiedades.id}}">Editar <i class="fas fa-pencil-alt"></i></a><br><br><br><a class="delete" href="/delete/{{propiedades.id}}">Eliminar <i class="fas fa-times" aria-hidden='true'></i></a></td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+            {% else %}
+              <span>No tiene propiedades</span>
+            {% endif %}
+    {%endif%}
+    </div>
+    <!-- Respaldo -->
+   
+</div>
+{% endblock %}

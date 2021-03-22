@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+{% block banner %}
+<div class="banner">
+  <form action="/p_search" method="POST" class="register_form center form-inline my-2 my-lg-0">
+      <div class="form_background center">
+        <div class="options-divider">
+      <select name="operacion" class="custom-select  " id="inlineFormCustomSelectPref">
+          <option value='' selected>Operación</option>
+          <option >Venta</option>
+          <option >Alquiler</option>
+      </select>
+      <select name="tipo_propiedad" class="custom-select  " id="inlineFormCustomSelectPref">
+          <option value='' selected>Tipo</option>
+          <option >Casa</option>
+          <option >Apartamento</option>
+          <option >Oficina</option>
+          <option >Depósito</option>
+      </select>
+      <select placeholder="Habitaciones" name="dormitorios" class="custom-select  " id="inlineFormCustomSelectPref">
+          <option value=''>Habitaciones</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5+">5 o más</option>
+      </select>
+      <select name="baños" class="custom-select  " id="inlineFormCustomSelectPref">
+          <option value='' selected>Baños</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3+">3 o mas</option>
+      </select>
+      <select class="custom-select" id="barrio" name="barrio">
+        <option selected="" value="">Zona</option>
+        {% for barrio in barrios %}
+        <option value="{{barrio.barrio}}">{{barrio.barrio}}</option>
+        {% endfor %}
+    </select>
+      <select name="currency" class="custom-select  " id="inlineFormCustomSelectPref">
+        <option selected value="precio_dolares"> U$S </option>
+        <option value="precio_pesos"> $ </option>
+    </select>
+  </div>
+    <div class="options-divider">
+      <input name="precio_min" class="form-control " type="search" placeholder="Precio mínimo" aria-label="Search">
+      <input name="precio_max" class="form-control " type="search" placeholder="Precio máximo" aria-label="Search">
+      <input name="metraje_min" class="form-control " type="search" placeholder="Metraje mínimo" aria-label="Search">
+      <input name="metraje_max" class="form-control " type="search" placeholder="Metraje máximo" aria-label="Search"><br>
+      <input name="ref" class="form-control ref" type="search" placeholder="Ref" aria-label="Search" style="width: 8rem;">
+    </div>  
+    <button class="button btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+    </div>    
+  </form>
+</div>
+{% endblock %}
+{% block content %}
+<div class="index_div">
+
+<div class="division">
+  <div class="column index-column-1">
+
+    <ul class="nav nav-tabs index-nav" id="myTab" role="tablist">
+      <li class="nav-item" >
+        <a class="nav-link active" style="color:rgb(1, 167, 1);" id="home-tab" data-toggle="tab" href="#buy" role="tab" aria-controls="home" aria-selected="true">Comprar</a>
+      </li>
+      <li class="nav-item" >
+        <a class="nav-link" style="color:rgb(1, 167, 1);" id="profile-tab" data-toggle="tab" href="#sell" role="tab" aria-controls="profile" aria-selected="false">Vender</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" style="color:rgb(1, 167, 1);" id="contact-tab" data-toggle="tab" href="#rent" role="tab" aria-controls="contact" aria-selected="false">Alquilar</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" style="color:rgb(1, 167, 1);" id="admin-tab" data-toggle="tab" href="#admin" role="tab" aria-controls="contact" aria-selected="false">Administrar</a>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="myTabContent">
+
+      <div class="tab-pane fade show active" id="buy" role="tabpanel" aria-labelledby="home-tab"><p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+        Rem suscipit quia molestias ad perspiciatis hic odit <br> 
+        blanditiis consequatur 
+        eveniet harum ea pariatur, est voluptate ab, fuga repudiandae a! Iusto, pariatur!
+      </p></div>
+
+      <div class="tab-pane fade" id="sell" role="tabpanel" aria-labelledby="profile-tab"><p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+        Rem suscipit quia molestias ad perspiciatis hic odit <br> 
+        blanditiis consequatur 
+        eveniet harum ea pariatur, est voluptate ab, fuga repudiandae a! Iusto, pariatur!
+      </p></div>
+
+      <div class="tab-pane fade" id="rent" role="tabpanel" aria-labelledby="contact-tab"><p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+        Rem suscipit quia molestias ad perspiciatis hic odit <br> 
+        blanditiis consequatur 
+        eveniet harum ea pariatur, est voluptate ab, fuga repudiandae a! Iusto, pariatur!
+      </p></div>
+
+      <div class="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab"><p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+        Rem suscipit quia molestias ad perspiciatis hic odit <br> 
+        blanditiis consequatur 
+        eveniet harum ea pariatur, est voluptate ab, fuga repudiandae a! Iusto, pariatur!
+      </p></div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="division">
+  <div class="column index-column-2"><!-- Column 1 -->
+    <h2 style="color: rgb(1, 167, 1);">Propiedades destacadas</h2>
+    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+      Rem suscipit quia molestias ad perspiciatis hic odit <br> 
+      blanditiis consequatur 
+      eveniet harum ea pariatur, est voluptate ab, fuga repudiandae a! Iusto, pariatur!
+    </p>
+    {% for array in get_properties %}
+    <ul>
+    {% for propiedades in array %}
+    <li>
+    <a class="card_link" href="/profile/{{propiedades[0].id}}">
+    <div class="cards" >
+      <img src="data:image/png;base64,{{ propiedades[1][propiedades[2]] }}" class="card-img-top" alt="...">
+      <div class="card-label" style="display: flex; background-color: rgba(1, 167, 1, 0.404); vertical-align: middle;">
+      <h4 style="text-align: justify;margin-left: 1rem; margin-top: auto; margin-bottom: auto; color: white; overflow: hidden;text-overflow: ellipsis;font-size: 130%;" class="card-text" >{{ propiedades[0].titulo}} </h4>
+      </div>
+      <div class="card-body">
+        <h5>{{propiedades[0].operaciones.operacion}}</h5>
+        {% if propiedades[0].operaciones.operacion == "Venta" %}
+                    {%if propiedades[0].precio_dolares != none%}
+                    <h4 class="$venta" style="display: flex;flex-direction: row;">u$s<p class="number_dots" style="margin-left:5px;">{{ propiedades[0].precio_dolares }}</p></h4>
+                    {% else %}
+                    <h4 class="$venta" style="display: flex;flex-direction: row;">$<p class="number_dots"style="margin-left:5px;">{{ propiedades[0].precio_pesos }}</p></h4>
+                    {%endif%}
+                {% else %}
+                    {%if propiedades[0].precio_pesos != none %}
+                    <h4 class="$alquiler" style="display: flex;flex-direction: row;">$<p class="number_dots"style="margin-left:5px;">{{ propiedades[0].precio_pesos }}</p></h4>
+                    {% else %}
+                    <h4 class="$alquiler" style="display: flex;flex-direction: row;">u$s<p class="number_dots" style="margin-left:5px;">{{ propiedades[0].precio_dolares }}</p></h4>
+                    {% endif %}
+                {% endif %}
+            <p><i style="color:rgb(1, 167, 1);" class="fas fa-bath"></i> {{ propiedades[0].baños }} • <i style="color:rgb(1, 167, 1);" class="fas fa-bed"></i> {{ propiedades[0].dormitorios }} • 
+              <i style="color:rgb(1, 167, 1);" class="fas fa-ruler-combined"></i>
+              <strong style="font-weight: normal;">{{ propiedades[0].metraje_edificio}} m2</strong style="font-weight: normal;"> 
+            </p>
+      </div>
+    </div>
+    </a>
+    </li>
+      {% endfor%}
+    </ul>
+      {% endfor%}
+      <a href="#"><h5>Ver más</h5></a>
+</div>
+
+<div class="column index-column-3"><!-- Column 1 -->
+ <h2 style="color: rgb(1, 167, 1);"> Nuevas propiedades </h2>
+ <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+  Rem suscipit quia molestias ad perspiciatis hic odit <br> 
+  blanditiis consequatur 
+  eveniet harum ea pariatur, est voluptate ab, fuga repudiandae a! Iusto, pariatur!
+</p>
+</div>
+
+</div>
+<script> 
+  var target = document.querySelectorAll(".number_dots");
+    target.forEach(element => {
+      var priceString = String(element.innerHTML)
+      console.log(priceString)
+    if (priceString.length == 4) {
+            priceDot = priceString.substring(0,1) + "." + priceString.substring(1, 4);
+            element.innerHTML = priceDot
+          } else if (priceString.length == 5) {
+            priceDot = priceString.substring(0, 2) + "." + priceString.substring(2, 6);
+            element.innerHTML = priceDot
+          } else if (priceString.length == 6) {
+            priceDot = priceString.substring(0,3) + "." + priceString.substring(3, 6)
+            element.innerHTML = priceDot
+          } else if (priceString.length == 7) {
+            priceDot = priceString.substring(0, 1) + "." + priceString.substring(1, 4) + "." + priceString.substring(4, 7);
+            element.innerHTML = priceDot
+          }  else if (priceString.length == 8) {
+            priceDot = priceString.substring(0, 2) + "." + priceString.substring(2, 5) + "." + priceString.substring(5, 8);
+            element.innerHTML = priceDot
+          } else if (priceString.length == 9) {
+            priceDot = priceString.substring(0, 3) + "." + priceString.substring(3, 6) + "." + priceString.substring(6, 9);
+            element.innerHTML = priceDot
+          } 
+    });
+</script>
+</div>
+{% endblock %}

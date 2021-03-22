@@ -1,0 +1,434 @@
+{% extends "base-admin.html" %}
+
+{% block content %}
+<div class="father">
+  <div class="profile">
+<!--TIPO DE PROPIEDAD ---------------->
+    <div class="profile-title child" style="overflow-x: hidden;text-overflow: ellipsis; width: 100%; background-color:rgba(117, 117, 117, 0.657); color: white; padding: 0.5rem;">
+        <h3>{{ get_property.titulo }}</h3>
+    </div>
+<!--ZONA/BARRIO ---------------->
+    <div class="profile-zone child" style= "width: 100%; border: #cce7d6 solid 1px; padding: 0.5rem">
+        <h4><i class="fas fa-map-marked-alt" style="color: rgb(1, 167, 1);"></i> Zona: <strong id = 'barrio'>{{ get_property.barrio.barrio }}</strong></h4>
+    <div >
+      <h3 style="color: rgb(1, 167, 1);">{{ get_property.operaciones.operacion }}</h3>
+      {% if get_property.precio_dolares == None %}
+      <strong>$</strong> <h3 style="color: rgb(1, 167, 1);" class="number_dots">{{ get_property.precio_pesos }}</h3>
+      {% else %}
+      <strong>U$S</strong> <h3 style="color: rgb(1, 167, 1);" class="number_dots">{{ get_property.precio_dolares }}</h3>
+      {% endif %}
+  </div>
+  <script> 
+    var target = document.querySelectorAll(".number_dots");
+      target.forEach(element => {
+        var priceString = String(element.innerHTML)
+        console.log(priceString)
+      if (priceString.length == 4) {
+              priceDot = priceString.substring(0,1) + "." + priceString.substring(1, 4);
+              element.innerHTML = priceDot
+            } else if (priceString.length == 5) {
+              priceDot = priceString.substring(0, 2) + "." + priceString.substring(2, 6);
+              element.innerHTML = priceDot
+            } else if (priceString.length == 6) {
+              priceDot = priceString.substring(0,3) + "." + priceString.substring(3, 6)
+              element.innerHTML = priceDot
+            } else if (priceString.length == 7) {
+              priceDot = priceString.substring(0, 1) + "." + priceString.substring(1, 4) + "." + priceString.substring(4, 7);
+              element.innerHTML = priceDot
+            }  else if (priceString.length == 8) {
+              priceDot = priceString.substring(0, 2) + "." + priceString.substring(2, 5) + "." + priceString.substring(5, 8);
+              element.innerHTML = priceDot
+            } else if (priceString.length == 9) {
+              priceDot = priceString.substring(0, 3) + "." + priceString.substring(3, 6) + "." + priceString.substring(6, 9);
+              element.innerHTML = priceDot
+            } 
+      });
+      </script>
+      </div>
+<!--IMAGENES ---------------->
+    <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          {% if get_property.photos1 %}
+          <li data-target="#carouselExampleCaptions"></li>
+          {% endif %}
+          {% if get_property.photos2 %}
+          <li data-target="#carouselExampleCaptions"></li>
+          {% endif %}
+          {% if get_property.photos3 %}
+          <li data-target="#carouselExampleCaptions"></li>
+          {% endif %}
+          {% if get_property.photos4 %}
+          <li data-target="#carouselExampleCaptions"></li>
+          {% endif %}
+          {% if get_property.photos5 %}
+          <li data-target="#carouselExampleCaptions"></li>
+          {% endif %}
+          {% if get_property.photos6 %}
+          <li data-target="#carouselExampleCaptions"></li>
+          {% endif %}
+          {% if get_property.photos7 %}
+          <li data-target="#carouselExampleCaptions"></li>
+          {% endif %}
+          {% if get_property.photos8 %}
+          <li data-target="#carouselExampleCaptions"></li>
+          {% endif %}
+          {% if get_property.photos9 %}
+          <li data-target="#carouselExampleCaptions"></li>
+          {% endif %}
+          {% if get_property.photos10 %}
+          <li data-target="#carouselExampleCaptions"></li>
+          {% endif %}
+          {% if get_property.photos11 %}
+          <li data-target="#carouselExampleCaptions"></li>
+          {% endif %}
+          {% if get_property.photos12 %}
+          <li data-target="#carouselExampleCaptions"></li>
+          {% endif %}
+          {% if get_property.photos13 %}
+          <li data-target="#carouselExampleCaptions"></li>
+          {% endif %}
+          {% if get_property.photos14 %}
+          <li data-target="#carouselExampleCaptions"></li>
+          {% endif %}
+          {% if get_property.photos15 %}
+          <li data-target="#carouselExampleCaptions"></li>
+          {% endif %}
+
+        </ol>
+        <div class="carousel-inner">
+          {% if get_property.photos1 %}
+          <div class="carousel-item active">
+            <img width="300px" src="data:image/png;base64,{{ base64.b64encode(get_property.photos1).decode('utf-8') }}" class="" alt="...">
+          </div>
+          {% endif %}
+          {% if get_property.photos2 %}
+          <div class="carousel-item">
+            <img width="300px" src="data:image/png;base64,{{ base64.b64encode(get_property.photos2).decode('utf-8') }}" class="" alt="...">
+          </div>
+          {% endif %}
+          {% if get_property.photos3 %}
+          <div class="carousel-item">
+            <img width="300px" src="data:image/png;base64,{{ base64.b64encode(get_property.photos3).decode('utf-8') }}" class="" alt="...">
+          </div>
+          {% endif %}
+          {% if get_property.photos4 %}
+          <div class="carousel-item">
+            <img width="300px" src="data:image/png;base64,{{ base64.b64encode(get_property.photos4).decode('utf-8') }}" class="" alt="...">
+          </div>
+          {% endif %}
+          {% if get_property.photos5 %}
+          <div class="carousel-item">
+            <img width="300px" src="data:image/png;base64,{{ base64.b64encode(get_property.photos5).decode('utf-8') }}" class="" alt="...">
+          </div>
+          {% endif %}
+          {% if get_property.photos6 %}
+          <div class="carousel-item">
+            <img width="300px" src="data:image/png;base64,{{ base64.b64encode(get_property.photos6).decode('utf-8') }}" class="" alt="...">
+          </div>
+          {% endif %}
+          {% if get_property.photos7 %}
+          <div class="carousel-item">
+            <img width="300px" src="data:image/png;base64,{{ base64.b64encode(get_property.photos7).decode('utf-8') }}" class="" alt="...">
+          </div>
+          {% endif %}
+          {% if get_property.photos8 %}
+          <div class="carousel-item">
+            <img width="300px" src="data:image/png;base64,{{ base64.b64encode(get_property.photos8).decode('utf-8') }}" class="" alt="...">
+          </div>
+          {% endif %}
+          {% if get_property.photos9 %}
+          <div class="carousel-item">
+            <img width="300px" src="data:image/png;base64,{{ base64.b64encode(get_property.photos9).decode('utf-8') }}" class="" alt="...">
+          </div>
+          {% endif %}
+          {% if get_property.photos10 %}
+          <div class="carousel-item">
+            <img width="300px" src="data:image/png;base64,{{ base64.b64encode(get_property.photos10).decode('utf-8') }}" class="" alt="...">
+          </div>
+          {% endif %}
+          {% if get_property.photos11 %}
+          <div class="carousel-item">
+            <img width="300px" src="data:image/png;base64,{{ base64.b64encode(get_property.photos11).decode('utf-8') }}" class="" alt="...">
+          </div>
+          {% endif %}
+          {% if get_property.photos12 %}
+          <div class="carousel-item">
+            <img width="300px" src="data:image/png;base64,{{ base64.b64encode(get_property.photos12).decode('utf-8') }}" class="" alt="...">
+          </div>
+          {% endif %}
+          {% if get_property.photos13 %}
+          <div class="carousel-item">
+            <img width="300px" src="data:image/png;base64,{{ base64.b64encode(get_property.photos13).decode('utf-8') }}" class="" alt="...">
+          </div>
+          {% endif %}
+          {% if get_property.photos14 %}
+          <div class="carousel-item">
+            <img width="300px" src="data:image/png;base64,{{ base64.b64encode(get_property.photos14).decode('utf-8') }}" class="" alt="...">
+          </div>
+          {% endif %}
+          {% if get_property.photos15 %}
+          <div class="carousel-item">
+            <img width="300px" src="data:image/png;base64,{{ base64.b64encode(get_property.photos15).decode('utf-8') }}" class="" alt="...">
+          </div>
+          {% endif %}
+
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Anterior</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Siguiente</span>
+        </a>
+      </div>
+      <!--MAP ---------------->
+      <br>
+      <div width="800" height="600" >
+        
+        <script>
+          function myFunction(x) {
+            divMap = document.getElementById('map')
+            if (x.matches) { // If media query matches
+              divMap.style.width="80vw";
+              divMap.style.height="40vh";
+            } else {
+              divMap.style.width="60vw";
+              divMap.style.height="30vh";
+            }
+          }
+          var x = window.matchMedia("(max-width: 1024px)")
+          myFunction(x) // Call listener function at run time
+          x.addListener(myFunction) // Attach listener function on state changes
+        </script>
+
+          <p id="dire" style="display: none;">{{ get_property.direccion }}</p>
+            <div id="map" style="width: 60vw; height: 30vh;">
+            <script>
+              var geocoder;
+              var map;
+              var address = document.getElementById('dire').innerHTML;
+              
+              function initMap() {
+                var map = new google.maps.Map(document.getElementById('map'), {
+                  zoom: 15,
+                  center: {lat: -34.8552277, lng: -56.2291891}
+                });
+                geocoder = new google.maps.Geocoder();
+                codeAddress(geocoder, map);
+                console.log(address);
+              }
+              function codeAddress(geocoder, map) {
+                geocoder.geocode({'address': "Montevideo," + address}, function(results, status) {
+                  if (status === 'OK') {
+                    map.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                      map: map,
+                      position: results[0].geometry.location
+                    });
+                  } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                  }
+                });
+              }
+            </script>
+          <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1nzOvrjtnkqcTavQRqhTUWpdDbG6KWrs&callback=initMap"
+          type="text/javascript"></script>
+         </div>
+       
+       </div>
+<!--DETALLES DE PROPIEDAD ---------------->
+<div class="profile-basicinfo child">
+  <h4 class="list-title">Ficha Técnica</h4>
+  <div class="ficha-tecnica">
+    <ul>
+      <li>Dirección:<strong>{{ get_property.direccion if get_property.direccion != None else 'Preguntale!'}}</strong></li>
+      <li>Estado:<strong>{{ get_property.estado}}</strong></li>
+      {% if get_property.permuta == True %}
+      <li>Acepta permuta:<strong>Si</strong></li>
+      {% elif get_property.permuta == False%}
+      <li>Acepta permuta:<strong>No</strong></li>
+      {% else %}
+      <li>Acepta permuta:<strong>Preguntale!</strong></li>
+      {% endif %}
+      {% if get_property.financia == True %}
+      <li>Financia:<strong>Si</strong></li>
+      {% elif get_property.financia == False%}
+      <li>Financia:<strong>No</strong></li>
+      {% else %}
+      <li>Financia:<strong>Preguntale!</strong></li>
+      {% endif %}
+      <li>Dormitorios:<strong>{{ get_property.dormitorios }}</strong></li>
+      <li>Baños:<strong>{{ get_property.baños }}</strong></li>
+      {% if get_property.garaje == "0" %}
+      <li>Garaje:<strong>No</strong></li>
+      {% else %}
+      <li>Garaje:<strong>{{ get_property.garaje }}</strong></li>
+      {% endif %}
+      <li>Disposición:<strong>{{ get_property.disposicion }}</strong></li>
+      <li>Orientación:<strong>{{ get_property.orientacion }}</strong></li>
+      <!-- if si aplican o no-->
+      {% if get_property.sobre is not none %}
+      <li>Sobre:<strong>{{ sobre }}</strong></li>
+      {% else %}
+      <li>Sobre:<strong>No aplica</strong></li>
+      {% endif %}
+      <li>Distancia del mar (metros):<strong>{{ get_property.distancia_al_mar if get_property.distancia_al_mar != None else 'No aplica'}}</strong></li>
+      <!-- /if si aplican o no -->
+      <li>Metros edificados:<strong>{{ get_property.metraje_edificio }}</strong></li>
+      <li>Metros de patio:<strong>{{ get_property.metraje_patio if get_property.metraje_patio != None else 'No aplica'}}</strong></li>
+      <li>Metros del terreno:<strong>{{ get_property.metraje_total }}</strong></li>
+      <li>Cantidad de plantas:<strong>{{ get_property.n_plantas }}</strong></li>
+    </ul>
+  </div>
+  <h4 class="list-title">Comodidades</h4>
+  <div class="comodidades">
+    <ul>
+      {% if comfort.agua_caliente %}
+      <li>Agua caliente <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.aire_acondicionado %}
+      <li>Aire acondicionado <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.altillo%}
+      <li>Altillo <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.amueblada %}
+      <li>Amueblada <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.balcón %}
+      <li>Balcón <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.barbacoa %}
+      <li>Barbacoa <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.box %}
+      <li>Box <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.bungalow %}
+      <li>Bungalow <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.altillo %}
+      <li>Calefacción <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.depósito %}
+      <li>Depósito <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.estufa_leña %}
+      <li>Estufa Leña <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.garaje %}
+      <li>Garaje  <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.gas_por_cañería %}
+      <li>Gas por cañería <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.gym %}
+      <li>GYM <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.instalación_de_tv_cable %}
+      <li>Instalación de TV cable <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.jacuzzi %}
+      <li>Jacuzzi <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.jardín %}
+      <li>Jardín <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.lavadero %}
+      <li>Lavadero <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.lavandería %}
+      <li>Lavandería <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.linea_blanca %}
+      <li>Linea blanca <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.living_comedor %}
+      <li>Living comedor <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.losa_radiante %}
+      <li>Losa radiante <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.parrillero %}
+      <li>Parrillero <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.patio %}
+      <li>Patio <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.piscina %}
+      <li>Piscina <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.piso_porcelanato %}
+      <li>Piso porcelanato <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.placard_en_la_cocina %}
+      <li>Placard en la cocina <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.placard_en_dormitorio %}
+      <li>Placard en el dormitorio <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.playroom %}
+      <li>Playroom <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.prevision_aa %}
+      <li>Prevision AA <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.sauna %}
+      <li>Sauna <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.sótano %}
+      <li>Sótano <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.terraza %}
+      <li>Terraza <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.terraza_lavadero %}
+      <li>Lavadero en la terraza <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.vestidor %}
+      <li>Vestidor <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.vista_al_mar %}
+      <li>Vista al mar <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.walkin_closet %}
+      <li>Walk-in closet <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if comfort.wifi %}
+      <li>WIFI <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+    </div>
+    <h4 class="list-title">Seguridad</h4>
+  <div class="comodidades">
+    <ul>
+      {% if seguridad.alarma %}
+      <li>Alarma <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if seguridad.cámaras_cctv %}
+      <li>Cámaras cctv <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if seguridad.cerca_perimetral %}
+      <li>Cerca perimetral <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if seguridad.portería_24hs %}
+      <li>Porteria 24 hs <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if seguridad.portón_eléctrico %}
+      <li>Portón eléctrico <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if seguridad.rejas %}
+      <li>Rejas <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+      {% if seguridad.guardia_de_seguridad %}
+      <li>Guardia de seguridad <br><i class="fas fa-check" style="color:  rgb(1, 167, 1);"></i></li>
+      {% endif %}
+    </div>
+    <h4 class="list-title">Descripción</h4>
+    <div class="description">
+      <p >{{ get_property.descripcion }}</p>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

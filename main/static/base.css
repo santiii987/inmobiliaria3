@@ -1,0 +1,525 @@
+/* CONFIG GENERAL ********************************************************/
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+.carousel-inner img{
+    width: 200px;
+}
+body{
+    font-family: 'Open Sans', sans-serif;
+    background-color: rgb(240, 240, 240);
+    overflow-x: hidden;
+    font-size: 95%;
+}
+body h2{/* TITULOS */
+    color: rgb(1, 167, 1);
+}
+body li{
+    list-style: none;
+}
+.social-nav a:hover{
+    border-top: 1px solid rgb(1, 167, 1);
+}
+.cards:hover{
+    border:rgb(1, 167, 1) 3px solid;
+}
+.card_link{
+    color: inherit;
+}
+.card_link:hover{
+    text-decoration: none;
+}
+
+.footer{
+    border-top: 3px rgb(1, 167, 1);
+}
+.footer h3{
+    border-bottom:1px solid white;
+}
+.subscribe{
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 25rem;
+    align-items: center;
+    justify-content: center;
+}
+.index_div{
+    margin-top: 1rem;
+    width: 100%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1rem;
+}
+.inactive{display: none;}
+.invisible{opacity: 0;}
+.visible{opacity: 1;}
+.pages{
+    padding: 1rem;
+}
+.pages a{
+    padding: 0.5rem;
+    color:grey;
+    font-size: 1.1rem;
+}
+.center{
+    margin-right: auto;
+    margin-left: auto;
+}
+.navbar{
+    border-bottom: 3px rgb(1, 167, 1) solid;
+}
+.nav-link{
+    color: black;
+    text-shadow: white;
+    font-weight: bolder;
+}
+.button{/* BUTTON IN GENERAL */
+    background-color: rgb(1, 167, 1);
+    color: white;
+}
+.button2{
+    background-color: #cce7d6;
+    color: white;
+}
+.button:hover{/* BUTTON IN GENERAL */
+    background-color: rgb(85, 228, 156);
+}
+.options-divider input{
+    box-shadow: 0px 11px 30px -11px #323436;
+}
+.options-divider select{
+    box-shadow: 0px 11px 30px -11px #323436;
+}
+/* / ALL SIZES STYLES *******************************************************/
+@media (min-width: 1024px){ /* <1024px ********************************************************/
+/*  NAV ********************************************************/
+.div_line{
+    width: 3rem;
+    border-right: rgb(153, 153, 153) 2px solid;
+    margin-right: 1rem;
+}
+/*  INDEX.HTML ********************************************************/
+.banner{
+    margin-top: -1rem;
+    padding: 5rem;
+    height: 50rem;
+    background-image: url("./montevideo2.png");
+    background-size: cover;
+    background-attachment: local;
+}
+.banner form{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    justify-content: center;
+    margin-top: 1rem;
+}
+.ref{
+    margin-top: 0.8rem;
+}
+.options-divider{ margin: 1rem;}
+.form_background{
+    text-align: center; 
+    padding: 2rem;
+    width: 90%;
+    /*background-color: rgba(245, 245, 245, 0.781);*/
+}
+.division{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-right: auto;
+    margin-left: auto;
+    
+}
+.column{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 11px 30px -11px #686b6e;
+    padding: 3rem;
+}
+.column ul{
+    justify-content: center;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+}
+.column ul li{
+    display: flex;
+    flex-direction: row;
+}
+.column a{
+    padding: 1rem;
+}
+.index-column-1{width: 98%;}
+.index-column-2{width: 68%;}
+.index-column-3{width: 28%;}
+.cards{
+    display: flex;
+    flex-direction: column;
+    width: 20vw;
+    min-width: 19.5rem;
+    border: rgba(22, 22, 22, 0.657) solid 1px;
+}
+.cards img{
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+.card-body{
+    align-items: left;
+    text-align: left;
+}
+.card-label{ height: 4rem;}
+.cards h4{
+    color: rgba(49, 136, 64, 0.781);
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+}
+.cards h5{
+    color: rgba(22, 22, 22, 0.657);
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+}
+
+/* ADMIN *****************************/
+.admin-father{
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    
+}
+.admin-search{ width: 80vw; }
+.inmueble{
+    padding: 5rem;
+}
+.property-description{
+    width: 20vw;
+    height: 20vh;
+}
+.insert-form{
+    display: flex;
+    flex-direction: column;
+}
+.group{
+    display: flex;
+    flex-direction: row;
+    align-items: left;
+    align-content: initial;
+    justify-content: space-between;
+    text-align: left;
+}
+.line{
+    margin-left: auto;
+    margin-right: auto;
+    width: 190vw;
+    margin-top: 1.5rem;
+    border-bottom: rgba(182, 182, 182, 0.548) 1px solid;
+    margin-bottom: 1.5rem;
+
+}
+.section{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 11px 30px -11px #686b6e;
+    padding: 3rem;
+}
+/* UPDATE-PROPERTY *****************************/
+.update-father{
+    padding: 1rem;
+}
+.update-fotos{
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+}
+.first-row{ display: flex; flex-direction: row;}
+.second-row{ display: flex; flex-direction: row;}
+.third-row{ display: flex; flex-direction: row;}
+.db-foto{
+    margin-bottom: 1rem;
+    margin-right: 1rem;
+}
+
+.div-foto{
+    width: 18vw;
+    border: black 1px solid;
+}
+/* ABOUT *****************************/
+.about-child{width: 50%; background-color: white; padding: 3rem;}
+.about-father{display: flex; flex-direction: column; justify-content: center;}
+
+/* ABOUT *****************************/
+.contact-page{margin: 3rem;}
+.contact-page form {width: 50%; background-color: white; padding: 3rem; margin-left: auto; margin-right: auto;}
+
+.subscribe{
+    border-top: 3px rgb(1, 167, 1) solid;
+    background-size: cover;
+    background-image: url("./puertooooooooo.jpeg");
+    background-attachment: local;
+    background-position-y: 40%;
+}
+.footer{
+    width: 100%;
+    height: fit-content;
+    background-color:rgba(22, 22, 22, 0.657);
+    color: ivory;
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+    text-align: center;
+}
+.footer div{
+    justify-items: center;
+    align-items: center;
+    align-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 3rem;
+}
+.footer h5{
+    font-size: 1vw;
+}
+.footer h4{
+    font-size: 1vw;
+}
+.footer h3{
+    font-size: 1.5vw;
+    
+}
+.footer div i{
+    color: white;
+}
+.config-child{
+    display: flex;
+    flex-direction: column; 
+    width: 20vw;
+    text-align: center;
+    min-width: 25rem;
+}
+}
+@media (max-width: 1024px){ /* >1024px ********************************************************/
+.banner{
+    margin-top: -1rem;
+    padding: 2rem;
+    min-height: fit-content;
+    min-width: fit-content;
+    background-image: url("./montevideo2.png");
+    background-size: cover;
+    background-attachment: local;
+}
+.banner form{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    height: 100%;
+    width: 40vw;
+    min-width: 15rem;
+    display: flex;
+    flex-direction: row;
+}
+.form_background{
+    text-align: center; 
+    padding: 0.5rem;
+    /*background-color: rgba(245, 245, 245, 0.781);*/
+}
+.banner form div select{
+    margin-bottom: 0.3rem;
+}
+.banner form div input{
+    margin-bottom: 0.3rem;
+}
+.banner form button{
+    width: 100%;
+}
+.division{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 98%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.column{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 11px 30px -11px #686b6e;
+    padding: 3rem;
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 1rem;
+}
+.column ul{
+    justify-content: center;
+    padding: 0;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+.column ul li{
+    display: flex;
+    flex-direction: row;
+}
+.column a{
+    padding: 1rem;
+}
+.index-nav{display: flex;flex-direction: row;width: 100%;}
+.cards{
+    display: flex;
+    flex-direction: column;
+    max-width: 30rem;
+    width: 90vw;
+    border: rgba(22, 22, 22, 0.657) solid 1px;
+}
+.card-body{
+    align-items: left;
+    text-align: left;
+}
+.cards img{
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+.card-label{ height: 5rem;}
+.cards h4{
+    color: rgba(49, 136, 64, 0.781);
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+}
+.cards h5{
+    color: rgba(22, 22, 22, 0.657);
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+}
+/* ADMIN *****************************/
+.admin-father{
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+.inmueble{
+    padding: 5rem;
+}
+.property-description{
+    width: 80vw;
+    height: 20vh;
+}
+.llamar{display: none;}
+.social-phone{display: none;}
+.social-saved{display: none;}
+.social-read{display: none;}
+.social-answered{display: none;}
+/* UPDATE-PROPERTY *****************************/
+.update-father{
+    padding: 1rem;
+}
+.update-father form{
+    display: flex;
+    flex-direction: column;
+}
+.update-father form div{
+    padding: 0.3rem;
+}
+
+/* ABOUT *****************************/
+.about-child{width: 100%; background-color: white; padding: 2rem;}
+.about-child-laterals{width: 100%; background-color: white; padding: 3rem;}
+.about-father{display: flex; flex-direction: column; align-items: center;}
+
+/* CONTACT PAGE *****************************/
+.contact-page{margin: 1rem;}
+.contact-page form {width: 100%; background-color: white; padding: 2rem; margin-left: auto; margin-right: auto;}
+.contact-enviar{ width: 100%;}
+
+.subscribe{
+    border-top: 3px rgb(1, 167, 1) solid;
+    background-size: cover;
+    background-image: url("./recorte\ 2.jpeg");
+    background-attachment: local;
+}
+.footer{
+    width: 100%;
+    height: 40rem;
+    background-color: rgba(22, 22, 22, 0.657);
+    color: ivory;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    text-align: left;
+}
+/* INSERT PROPERTY ****************************/
+.group{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    align-content: initial;
+    justify-content: space-between;
+    text-align: left;
+}
+.line{
+    margin-left: auto;
+    margin-right: auto;
+    width: 190vw;
+    margin-top: 1.5rem;
+    border-bottom: rgba(182, 182, 182, 0.548) 1px solid;
+    margin-bottom: 1.5rem;
+
+}
+/* FOOTER ********************************/
+.footer div{
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    height: 100%;
+    width: 100%;
+}
+.footer h5{
+    font-size: 1rem;
+}
+.footer h4{
+    font-size: 1rem;
+}
+.footer h3{
+    font-size: 1.5rem;
+}
+.footer div i{
+    color: white;
+}
+.config-child{
+    display: flex;
+    flex-direction: column; 
+    width: 60vw;
+    text-align: center;
+    }
+}
+
+/* Animaciones */
+.fade-in{
+    animation-name:fadein;
+    animation-duration:2s;
+}
+@keyframes fadein {
+    0% {opacity:0;}
+    100% {opacity:1;}
+    }
+
+@keyframes calltoaction {
+    0%   {color:  rgb(1, 167, 1);}
+    50% {color: red;}
+    100%   {color:   rgb(1, 167, 1);}
+}
+.calltoaction{ animation-name: calltoaction; animation-duration: 2s; animation-iteration-count: infinite;}

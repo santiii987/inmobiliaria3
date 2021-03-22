@@ -1,0 +1,202 @@
+/* CONFIG GENERAL ********************************************************/
+@import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');
+.invisible{
+    opacity: 0;
+}
+body{
+    font-family: 'Prompt', sans-serif;
+    background-color: rgb(226, 226, 226);
+    background-image: url("./MadnessRombosMiniBlackWhite.png");
+}
+body h2{/* TITULOS */
+    color: rgb(175, 107, 107);
+}
+body button:hover{/* ALL BUTTON HOVER */
+    color: rgb(175, 107, 107);
+}
+.btn-link{
+    color: red;
+}
+.btn-link:hover{/* ALL BUTTON-link HOVER (bootstrap class) */
+    color: rgb(179, 4, 4);
+}
+.footer a{
+    color: white;
+}
+body li{
+    list-style: none;
+}
+.info{
+    width: 100%;
+}
+.plan{
+    padding: 1rem;
+    width: 100%;
+}
+.navbar{
+    background-color: black;
+}
+.register_form h3{
+    color: rgb(179, 4, 4);
+}
+.button{/* BUTTON IN GENERAL */
+    background-color: rgb(179, 4, 4);
+}
+.button:hover{/* BUTTON IN GENERAL */
+    background-color: rgb(175, 107, 107);
+}
+.container{
+    background-color: white;
+}
+
+/* /CONFIG GENERAL ********************************************************/
+
+/* ALL SIZES STYLES *******************************************************/
+.header{
+    width: 100%;
+}
+.footer{
+    margin-top: 1rem;
+    background-color: grey;
+    width: 100%;
+}
+.marca_de_agua{
+    background-color: grey;
+    width: 100%;
+    text-align: center;
+}
+.marca_de_agua a:hover{
+    color: red;
+    text-decoration: none;
+}
+.marca_de_agua a{
+    color: white;
+}
+.child{
+    padding: 2rem;
+}
+/* / ALL SIZES STYLES *******************************************************/
+
+@media (min-width: 1024px){ /* <1024px ********************************************************/
+/*  INDEX.HTML ********************************************************/
+.carousel-item-1{
+    background-image: url("./hora\ de\ entrenar.png");
+    background-size: contain;
+    background-position: center;
+    background-attachment: local;
+    height: 40rem;
+}
+.carousel-item-2{
+    background-image: url("./personalizados.png");
+    background-size: contain;
+    background-position: center;
+    background-attachment: local;
+    height: 40rem;
+}
+.carousel-item-3{
+    background-image: url("./hora\ de\ entrenar2.png");
+    background-size: contain;
+    background-attachment: local;
+    background-position: center;
+    height: 40rem;
+}
+.father{
+    padding: 1rem;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+
+}
+.father-banner{
+    padding: 1rem;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(65, 65, 65);
+}
+.child{
+    width: 100%;
+    margin: 1rem;
+    
+}
+/* NAV-BAR ********************************************************/
+
+.div_line{
+    width: 3rem;
+    border-right: rgb(153, 153, 153) 2px solid;
+    margin-right: 1rem;
+    opacity: 0.5;
+}
+.footer{
+    display: flex;
+    flex-direction: row;
+}
+
+.social_media{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+.social_media a{
+    width: fit-content;
+}
+}
+@media (max-width: 1024px){ /* >1024px ********************************************************/
+.carousel-item-1{
+    background-image: url("./hora\ de\ entrenar.png");
+    background-size: contain;
+    background-attachment: local;
+    height: 30rem;
+}
+.carousel-item-2{
+    background-image: url("./Untitled\ design.png");
+    background-size: contain;
+    background-attachment: local;
+    height: 30rem;
+}
+.carousel-item-3{
+    background-image: url("./hora\ de\ entrenar2.png");
+    background-size: contain;
+    background-attachment: local;
+    height: 30rem;
+}
+.father{
+    align-items: center;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+}
+.father-banner{
+    padding: 1rem;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(65, 65, 65);
+}
+.child{
+    width: 100%;
+    margin: 1rem;
+}
+.footer{
+    display: flex;
+    flex-direction: column;
+}
+
+.social_media{
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+}
+.social_media a{
+    width: fit-content;
+    padding: 1rem;
+}
+}

@@ -1,0 +1,200 @@
+{% extends "base-admin.html" %}
+
+{% block content %}
+<div class="social-father" style="padding: 1rem;">
+    <div class="social-nav">
+        <ul class="nav">
+            {% if not propietarios%}
+            <li class="nav-item">
+              <a class="nav-link calltoaction" style="border-radius: 5rem;background-color: rgba(255, 255, 255, 0.651); color: rgb(1, 167, 1);" href="#" data-toggle="modal" data-target="#modalInsertPropietario"><i class="fas fa-user-plus"></i> Añadir propietario</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link" style="border-radius: 5rem;background-color: rgba(255, 255, 255, 0.651); color: rgb(1, 167, 1);" href="#" data-toggle="modal" data-target="#modalInsertPropietario"><i class="fas fa-user-plus"></i> Añadir propietario</a>
+            </li>
+            {%endif%}
+            <li class="nav-item">
+              <a class="nav-link" style="border-radius: 5rem;background-color: rgba(255, 255, 255, 0.651); color: rgb(1, 167, 1);" onclick="help()" href="#" >?</a>
+            </li>
+          </ul>
+          <br>
+    </div>
+    <script>
+      function help() {
+        var newLine = "\r\n"
+        var message = "1- Para añadir un propietario, rellenar los campos con la información correcta y luego click en Ingresar."
+        message += newLine;
+        message += "2- Si se desea modificar los datos de un usuario, click en modificar, luego en dicha sección, cambiar los datos correspondientes.";
+        message += newLine;
+        message += "3- La sección Propietarios muestra una tabla con todos los propietarios";
+        message += newLine;
+        message += "4- Para eliminar un propietario, click en el bote de basura"
+        window.alert(message)
+      };
+    </script>
+    <div class="social-body" style="overflow-x: scroll;">
+        <table class="table table-striped" style="font-size: 90%;">
+            <thead>
+                <tr>
+                    <th class="social-name" scope="col">Nombre y Apellido</th>
+                    <th class="social-phone" scope="col">Tel/Cel</th>
+                    <th class="social-mail" scope="col">Correo</th>
+                    <th class="social-remove" scope="col">Eliminar</th>
+                    <th class="social-saved" scope="col">Modificar</th>
+                </tr>
+            </thead>
+            <tbody style="background-color: white;">
+              {% if not propietarios %}
+                <tr style="background-color: rgb(255, 255, 255);">
+                  <td class="social-name" > Añadir usuario <strong style="color: rgb(1, 167, 1);"><a href="#" data-toggle="modal" data-target="#modalInsertPropietario">(click en "Añadir")</a></strong> </td>
+                  <td class="social-phone">...</td>
+                  <td class="social-correo" name="owner-email">ejemplo@correo.com</td>
+                  <td class="social-remove"><i class="fas fa-trash-alt" aria-disabled="true" style="color: rgb(190, 190, 190);"></i></td>
+                  <td aria-disabled="true" style="color: rgb(190, 190, 190);">Modificar</td>   
+              </tr>
+              {%else%}
+                {% for propietario in propietarios %}
+                  <tr style="background-color: rgb(255, 255, 255);" ></tr>
+                      <td class="social-name"><a href="/propietarios/{{propietario.id}}">{{propietario.nombre}} {{propietario.apellido}}</a></td>
+                      {% if propietario.telefono %}
+                      <td name="owner-phone" class="social-phone"> {{propietario.telefono}} </td>
+                      {% else %}
+                      <td name="owner-phone" class="social-phone">No</td>
+                      {% endif %}
+                      <td class="social-correo" name="owner-email">{{propietario.email}}</td>
+                      <td class="social-remove"><form id="remove-form{{propietario.id}}" action="/remove_owner/{{propietario.id}}" method="POST"></form><button style="background-color: transparent; border: transparent;" onclick="removeConfir({{propietario.id}})"><i class="fas fa-trash-alt"></i></button></td>
+                      <td><a href="#" data-toggle="modal" data-target="#modal{{propietario.id}}" href="#">Modificar</a></td>   
+                  </tr>
+
+              {% endfor %}
+            {% endif %}
+          </tbody>
+        </table>
+    </div>
+<script>
+  function removeConfir(input) {
+        const confir = confirm("Seguro desea eliminar este propietario?");
+        const form = document.getElementById("remove-form"+input);
+        if (confir == false) {
+          console.log("No eliminado");
+        }
+        else{
+          form.submit();
+        }
+      };
+</script>
+
+    <div class="modal fade" id="modalInsertPropietario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Insertar propietario</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form method="POST" id="insert-owner" action="/insert-propietario" autocomplete='off' enctype="multipart/form-data">
+                {{ form.csrf_token }}
+            <div class="propietarios">
+            <label>Nombre del propietario:</label>
+            <input id="nombre" name="nombre" required="required" type="text" value="">
+
+            <label>Apellido del propietario:</label>
+            <input id="apellido" name="apellido" required="required" type="text" value="">
+
+            <label>Email del propietario:</label>
+            <input id="inserted-email" name="email" required="required" type="text" value="">
+
+            <label>Celular del propietario:</label>
+            <input id="inserted-phone" name="telefono" required="required" type="number" value="">
+        </div>
+          <button id="submitowner" style="display: none;" type="submit"></button>
+    </form>
+        <div class="modal-footer">
+           <button class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+           <button class="btn button btn-primary" onclick="checkOwners()"> Ingresar</button>
+           </div>
+        </div>
+          </div>
+        </div>
+      </div>
+      
+      {% for propietario in propietarios %}
+      <div class="modal fade" id="modal{{propietario.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Perfil de {{propietario.nombre}}{{propietario.apellido}}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+            <form method="POST" action="/update-owner" autocomplete='off' enctype="multipart/form-data">
+                {{ form.csrf_token }}
+            <div class="propietarios">
+            <input style="display: none;" type="number" name="id" value="{{propietario.id}}">
+
+            <label>Nombre del propietario:</label>
+            <input id="nombre" name="nombre" required="required" type="text" value="{{propietario.nombre}}">
+            
+
+            <label>Apellido del propietario:</label>
+            <input id="apellido" name="apellido" required="required" type="text" value="{{propietario.apellido}}">
+            
+
+            <label>Email del propietario:</label>
+            <input id="email" name="email" required="required" type="text" value="{{propietario.email}}">
+
+            <label>Celular del propietario:</label>
+            <input id="telefono" name="telefono" required="required" type="number" value="{{propietario.telefono}}">
+
+        </div>
+        <div class="modal-footer">
+           <button class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+           <button class="btn button btn-primary" type="submit"> Ingresar</button>
+           </div>
+        </form>
+        </div>
+          </div>
+        </div>
+      </div>
+      {%endfor%}
+      <script>
+        function checkOwners() {
+            var ownerEmail = document.getElementsByName('owner-email');
+            var ownerPhone = document.getElementsByName('owner-phone');
+            var ownerName = document.getElementById('nombre').value;
+            var ownerSurename = document.getElementById('apellido').value;
+            var email = document.getElementById('inserted-email').value;
+            var phone = document.getElementById('inserted-phone').value;
+            var submitowner = document.getElementById('submitowner');
+            var insertForm = document.getElementById('insert-owner');
+            let emailCheck = false;
+            let phoneCheck = false;
+            for (let i of ownerPhone) {
+                if (Number(phone) == Number(i.innerHTML)) {
+                  phoneCheck = true;
+              } 
+
+              };
+            for (let i of ownerEmail) {
+              if (email == i.innerHTML) {
+                emailCheck = true;
+              } 
+
+              };
+              if (phoneCheck == true) {
+                window.alert("Este número ya esta registrado");
+              } else if (phone == 0){
+                window.alert("Ingresa un numero de telefono");
+              } else if (emailCheck == true) {
+                window.alert("Este email ya esta registrado");
+              } 
+              else {
+                submitowner.click();
+              }
+            };
+    </script>
+{% endblock %}

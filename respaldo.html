@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="pages">
+        {% if p_search == True%}
+          {% if pagina == paginas and pagina == 1%}
+            <a style="color:rgb(1, 167, 1); border: rgb(1, 167, 1) 1px solid; border-radius: 20%;" href='/p_search/{{pagina}}'>{{pagina}}</a>   
+          {% elif pagina == paginas%}
+            <a href="/p_search/{{pagina-1}}/0/{{get_properties[0][0].id}}
+        {{get_properties[0][0].id}}">Anterior</a> <a style="border: rgb(197, 197, 197) 1px solid; border-radius: 20%;" href='/p_search/{{pagina-1}}/0/{{get_properties[0][0].id}}
+        {{get_properties[0][0].id}}'>{{pagina-1}}</a><a style="color:rgb(1, 167, 1); border:rgb(1, 167, 1) 1px solid; border-radius: 20%;" href='/p_search/{{pagina}}'>{{pagina}}</a>
+          {% elif pagina == 1%}
+            <a style="color:rgb(1, 167, 1); border: rgb(1, 167, 1) 1px solid; border-radius: 20%;" href='/p_search/{{pagina}}'>{{pagina}}</a><a style="border: rgb(197, 197, 197) 1px solid; border-radius: 20%;" href='/p_search/{{pagina+1}}/1/{{get_properties[8][0].id}}'>{{pagina+1}}</a> <a href="/p_search/{{pagina+1}}/1/{{get_properties[8][0].id}}">Siguiente</a>
+          {% else %}
+           <a href="/p_search/{{pagina-1}}/0/{{get_properties[0][0].id}}
+        {{get_properties[0][0].id}}">Anterior</a> <a style="border: rgb(197, 197, 197) 1px solid; border-radius: 20%;" href='/p_search/{{pagina-1}}/0/{{get_properties[0][0].id}}
+        {{get_properties[0][0].id}}'>{{pagina-1}}</a><a style="color:rgb(1, 167, 1); border: rgb(1, 167, 1) 1px solid; border-radius: 20%;" href='/p_search/{{pagina}}'>{{pagina}}</a><a style="border: rgb(197, 197, 197) 1px solid; border-radius: 20%;" href='/p_search/{{pagina+1}}/1/{{get_properties[8][0].id}}'>{{pagina+1}}</a> <a href="/p_search/{{pagina+1}}/1/{{get_properties[8][0].id}}">Siguiente</a>
+          {% endif %}
+        {% elif ventas == True %}
+          {% if pagina == paginas and pagina == 1%}
+          <a style="color:rgb(1, 167, 1); border: rgb(1, 167, 1) 1px solid; border-radius: 20%;" href='/ventas/{{pagina}}'>{{pagina}}</a>   
+          {% elif pagina == paginas%}
+          <a href="/ventas/{{pagina-1}}/0/{{get_properties[0][0].id}}
+        {{get_properties[0][0].id}}">Anterior</a> <a style="border: rgb(197, 197, 197) 1px solid; border-radius: 20%;" href='/ventas/{{pagina-1}}/0/{{get_properties[0][0].id}}
+        {{get_properties[0][0].id}}}}'>{{pagina-1}}</a><a style="color:rgb(1, 167, 1); border:rgb(1, 167, 1) 1px solid; border-radius: 20%;" href='/ventas/{{pagina}}'>{{pagina}}</a>
+          {% elif pagina == 1%}
+          <a style="color:rgb(1, 167, 1); border: rgb(1, 167, 1) 1px solid; border-radius: 20%;" href='/ventas/{{pagina}}'>{{pagina}}</a><a style="border: rgb(197, 197, 197) 1px solid; border-radius: 20%;" href='/ventas/{{pagina+1}}/1/{{get_properties[8][0].id}}'>{{pagina+1}}</a> <a href="/ventas/{{pagina+1}}/1/{{get_properties[8][0].id}}">Siguiente</a>
+          {% else %}
+          <a href="/ventas/{{pagina-1}}/0/{{get_properties[0][0].id}}
+        {{get_properties[0][0].id}}">Anterior</a> <a style="border: rgb(197, 197, 197) 1px solid; border-radius: 20%;" href='/ventas/{{pagina-1}}/0/{{get_properties[0][0].id}}
+        {{get_properties[0][0].id}}'>{{pagina-1}}</a><a style="color:rgb(1, 167, 1); border: rgb(1, 167, 1) 1px solid; border-radius: 20%;" href='/ventas/{{pagina}}'>{{pagina}}</a><a style="border: rgb(197, 197, 197) 1px solid; border-radius: 20%;" href='/ventas/{{pagina+1}}/1/{{get_properties[8][0].id}}'>{{pagina+1}}</a> <a href="/ventas/{{pagina+1}}/1/{{get_properties[8][0].id}}">Siguiente</a>
+          {% endif %}
+        {% elif alquiler == True %}
+          {% if pagina == paginas and pagina == 1%}
+          <a style="color:rgb(1, 167, 1); border: rgb(1, 167, 1) 1px solid; border-radius: 20%;" href='/alquiler/{{pagina}}'>{{pagina}}</a>   
+          {% elif pagina == paginas%}
+          <a href="/alquiler/{{pagina-1}}/0/{{get_properties[0][0].id}}
+        {{get_properties[0][0].id}}">Anterior</a> <a style="border: rgb(197, 197, 197) 1px solid; border-radius: 20%;" href='/alquiler/{{pagina-1}}/0/{{get_properties[0][0].id}}
+        {{get_properties[0][0].id}}'>{{pagina-1}}</a><a style="color:rgb(1, 167, 1); border:rgb(1, 167, 1) 1px solid; border-radius: 20%;" href='/alquiler/{{pagina}}'>{{pagina}}</a>
+          {% elif pagina == 1%}
+          <a style="color:rgb(1, 167, 1); border: rgb(1, 167, 1) 1px solid; border-radius: 20%;" href='/alquiler/{{pagina}}'>{{pagina}}</a><a style="border: rgb(197, 197, 197) 1px solid; border-radius: 20%;" href='/alquiler/{{pagina+1}}/1/{{get_properties[8][0].id}}'>{{pagina+1}}</a> <a href="/alquiler/{{pagina+1}}/1/{{get_properties[8][0].id}}">Siguiente</a>
+          {% else %}
+          <a href="/alquiler/{{pagina-1}}/0/{{get_properties[0][0].id}}
+        {{get_properties[0][0].id}}">Anterior</a> <a style="border: rgb(197, 197, 197) 1px solid; border-radius: 20%;" href='/alquiler/{{pagina-1}}/0/{{get_properties[0][0].id}}
+        {{get_properties[0][0].id}}'>{{pagina-1}}</a><a style="color:rgb(1, 167, 1); border: rgb(1, 167, 1) 1px solid; border-radius: 20%;" href='/alquiler/{{pagina}}'>{{pagina}}</a><a style="border: rgb(197, 197, 197) 1px solid; border-radius: 20%;" href='/alquiler/{{pagina+1}}/1/{{get_properties[8][0].id}}'>{{pagina+1}}</a> <a href="/alquiler/{{pagina+1}}/1/{{get_properties[8][0].id}}">Siguiente</a>
+          {% endif %}
+        {% else %}
+            {% if pagina == paginas and pagina == 1%}
+              <a style="color:rgb(1, 167, 1); border: rgb(1, 167, 1) 1px solid; border-radius: 20%;" href='/{{pagina}}'>{{pagina}}</a>   
+            {% elif pagina == paginas%}
+              <a href="/{{pagina-1}}/0/{{get_properties[0][0].id}}
+        {{get_properties[0][0].id}}">Anterior</a> <a style="border: rgb(197, 197, 197) 1px solid; border-radius: 20%;" href='/{{pagina-1}}/0/{{get_properties[0][0].id}}
+        {{get_properties[0][0].id}}'>{{pagina-1}}</a><a style="color:rgb(1, 167, 1); border:rgb(1, 167, 1) 1px solid; border-radius: 20%;" href='/{{pagina}}'>{{pagina}}</a>
+            {% elif pagina == 1%}
+              <a style="color:rgb(1, 167, 1); border: rgb(1, 167, 1) 1px solid; border-radius: 20%;" href='/{{pagina}}'>{{pagina}}</a><a style="border: rgb(197, 197, 197) 1px solid; border-radius: 20%;" href='/{{pagina+1}}/1/{{get_properties[8][0].id}}'>{{pagina+1}}</a> <a href="/{{pagina+1}}/1/{{get_properties[8][0].id}}">Siguiente</a>
+            {% else %}
+              <a href="/{{pagina-1}}/0/{{get_properties[0][0].id}}
+        {{get_properties[0][0].id}}">Anterior</a> <a style="border: rgb(197, 197, 197) 1px solid; border-radius: 20%;" href='/{{pagina-1}}/0/{{get_properties[0][0].id}}
+        {{get_properties[0][0].id}}'>{{pagina-1}}</a><a style="color:rgb(1, 167, 1); border: rgb(1, 167, 1) 1px solid; border-radius: 20%;" href='/{{pagina}}'>{{pagina}}</a><a style="border: rgb(197, 197, 197) 1px solid; border-radius: 20%;" href='/{{pagina+1}}/1/{{get_properties[8][0].id}}'>{{pagina+1}}</a> <a href="/{{pagina+1}}/1/{{get_properties[8][0].id}}">Siguiente</a>
+            {% endif %}
+        {% endif %}
+        </div>
+
+
+
+</body>
+</html>

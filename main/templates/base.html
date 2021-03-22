@@ -1,0 +1,240 @@
+{% block head %}
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pallares y Asociados</title>
+  <link rel="icon" href="{{url_for('static', filename='favicon.ico')}}" type="image/ico">
+  <!--CSS-------------------------------------------------------------->
+  <!--FONT AWESOME----------------------------------------------------->
+  <script src="https://kit.fontawesome.com/81f085f1f3.js" crossorigin="anonymous"></script>
+  <!--PROFILE-->
+  <link rel="stylesheet" href="{{url_for('static', filename='profile.css')}}">
+  <!--ADMIN-->
+  <link rel="stylesheet" href="{{url_for('static', filename='admin.css')}}">
+  <!--PREMIUM DESIGN----------------------------------------------------->
+  <link rel="stylesheet" href="{{url_for('static', filename='style-premium.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='animation-premium.css')}}">
+  
+</head>
+{% endblock %}
+
+
+
+{% block nav %}
+
+<body>
+  <!--NAVIGATION------------------------------------------------->
+  <script>
+    // INTERSECTION OBSERVER
+    document.addEventListener("DOMContentLoaded", () => {
+        let options = {
+          root: null,
+          rootMargin: "-100px -100px",
+          threshold: 0.05
+        };
+        let observer = new IntersectionObserver(beTouching, options);
+        document.querySelectorAll(".object").forEach(obj => {
+          observer.observe(obj);
+        });
+      });
+      function beTouching(entries, ob) {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            console.log("intersecting");
+            console.log(entry.target);
+            console.log(entry.time, entry.intersectionRatio);
+            if (entry.target.classList == "slide") {
+                entry.target.classList.add("slide-in");
+            } else {
+                entry.target.classList.add("fade-in");
+            }
+            entry.target.classList.remove("invisible");
+            ob.unobserve(entry.target);
+          } else {
+            entry.target.classList.add("invisible");
+          }
+        });
+    }
+    //SCROLL OPTIONS
+    window.onscroll = function() {myFunction().then()};
+        function myFunction() {
+          if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            //Menu
+            document.getElementById("float-burger").classList.remove("invisible")
+            document.getElementById("float-burger").classList.add("float") 
+            //Arrow
+            document.getElementById("float-arrow").classList.remove("invisible")
+            document.getElementById("float-arrow").classList.add("slide-in")
+            //Coffee
+            document.getElementById("float-coffee").classList.remove("inactive")
+            document.getElementById("float-coffee").classList.add("slide-in")
+          } else {
+            //Menu
+            document.getElementById("float-burger").classList.add("invisible")
+            document.getElementById("float-burger").classList.remove("slide-in")
+            //Arrow
+            document.getElementById("float-arrow").classList.add("invisible")
+            document.getElementById("float-arrow").classList.remove("slide-in")
+            //Coffee
+            document.getElementById("float-coffee").classList.add("inactive")
+            document.getElementById("float-coffee").classList.remove("slide-in")
+          }
+        }
+        
+        </script>
+<nav id="navigation" class="navigation">
+    <a href=""><img src="{{url_for('static', filename='pallares&asociados2.png')}}" height="60px" alt=""></a>
+    <ul id="menu-ul">
+        <li><a style="text-shadow: 2px 2px black;" href="/" onclick="burger(false)">Inicio</a></li>
+        <li><a style="text-shadow: 2px 2px black;" href="/#about-us" onclick="burger(false)">Sobre nosotros</a></li>
+        <li><a style="text-shadow: 2px 2px black;" href="/contact-page" onclick="burger(false)">Contacto</a></li>
+        <!-- <li><a style="text-shadow: 2px 2px black;" href="" onclick="burger(false)">Ingresar</a></li> -->
+        
+    </ul>
+    <div id="burger" class="burger" onmouseover="hoverBurger(true)" onmouseout="hoverBurger(false)" onclick="burger(true)">
+        <div class="line"></div>
+        <div class="line line-2"></div>
+        <div class="line line-3"></div>
+    </div>
+</nav>
+<script>
+    function burger(value) {
+        const cross = document.getElementById("cross");
+        const burger = document.getElementById("burger");
+        const menu = document.getElementById("menu");
+        var line2 = document.getElementById("line2");
+        var line3 = document.getElementById("line3");
+        if (value == true) {
+            menu.classList.remove("slide-out");
+            menu.classList.remove("inactive");
+            menu.classList.add("slide-in");
+            cross.classList.add("burger")
+            cross.classList.remove("inactive")
+            burger.classList.add("inactive")
+            burger.classList.remove("burger")
+            document.getElementById("menu-ul").className = "invisible"
+            document.body.style.overflowY = "hiden"
+            line2.style.width="50%"
+            line3.style.width="25%"
+            document.getElementById("float-coffee").classList.add("inactive")
+        } else {
+            menu.classList.remove("slide-in");
+            menu.classList.add("slide-out")
+            menu.classList.add("inactive");
+            burger.classList.add("burger")
+            burger.classList.remove("inactive")
+            cross.classList.add("inactive")
+            cross.classList.remove("burger")
+            document.getElementById("menu-ul").classList.remove("invisible")
+            document.getElementById("menu-ul").classList.add("fade-in")
+            line2.style.width="100%"
+            line3.style.width="100%"
+        }
+    }
+</script>
+<div id="menu" class="menu inactive">
+    <div id="cross" class="cross inactive" onclick="burger(false)">
+        <div><strong style="padding: 0.5rem;background-color: rgb(77, 76, 76);color: white;">X</strong></div>
+    </div>
+    <ul>
+        <li><a href="/" onclick="burger(false)">Inicio</a></li>
+        <li><a href="/ventas" onclick="burger(false)">Ventas</a></li>
+        <li><a href="/alquiler" onclick="burger(false)">Alquileres</a></li>
+        <li><a href="#about-us" onclick="burger(false)">Institucional</a></li>
+        <li><a href="/contact-page" onclick="burger(false)">Contacto</a></li>
+    </ul>
+</div>
+  <!--/NAVIGATION------------------------------------------------->
+    <!-- FLASH MESSAGE ------------------------------>
+    <div class="flash-message" style="position: fixed;width: 100%;
+    
+    top: 11%;">
+      {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+      <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        {{message}}
+      </div>
+      {% endfor %}
+    {% endif %}
+    {% endwith %}
+    </div>
+    <!-- /FLASH MESSAGE ------------------------------>
+  
+{% endblock %}
+
+{% block banner %}
+{% endblock %}
+
+
+{% block content %}
+{% endblock %}
+
+{% block footer%}
+<div class="float-menu">
+  <div style="padding: 0.8rem;background-color: rgb(1, 167, 1);border-radius: 60px;border: 1px solid rgb(1, 167, 1);" 
+  id="float-burger" class="burger invisible" 
+  onmouseover="hoverBurger(true)" onmouseout="hoverBurger(false)" onclick="burger(true)">
+      <div id="line1" class="line"></div>
+      <div id="line2" class="line line-2"></div>
+      <div id="line3" class="line line-3"></div>
+  </div>
+</div>
+<script>
+  function hoverBurger(input) {
+      if (input == true) {
+          document.querySelectorAll(".line-2").forEach( obj => {obj.classList.add("line2")} )
+          document.querySelectorAll(".line-3").forEach( obj => {obj.classList.add("line3")} )
+      } else {
+          document.querySelectorAll(".line-2").forEach( obj => {obj.classList.remove("line2")} )
+          document.querySelectorAll(".line-3").forEach( obj => {obj.classList.remove("line3")} )
+      }
+      
+  }
+</script>
+<div id="float-arrow" class="float-arrow float invisible">
+  <a style="color: rgb(1, 167, 1);text-decoration: none;font-size: large;text-shadow: 2px 2px white;" 
+  href="#" onclick="scrollTop()"><h1>ᐱ</h1></a>
+  <script>
+    function scrollTop() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+}
+  </script>
+</div>
+<div id="float-coffee" class="float-coffee inactive" >
+<div style="display: flex;flex-direction: row;">
+<h3 class="">
+    <a href="https://api.whatsapp.com/send?phone=+59899485699" target="_blank" 
+    style="text-decoration: none;color: white;margin-right: 0.4rem;text-shadow: 2px 2px black;">> Hablamos?</a>
+</h3>
+<img src="{{url_for('static', filename='whatsapp.png')}}" alt="coffee" width="30px" height="30px">
+</div>
+</div>
+
+<div class="father footer">
+  <div id="footer" class="division">
+      <div class="subdivision object invisible">
+          <img style="opacity: 0.5;" src="{{url_for('static', filename='pallares&asociados2.png')}}" height="200px" alt="">
+      </div>
+      <div class="footer-line"></div>
+      <div class="subdivision object invisible">
+      <div class="whatsapp">
+          <h3 style="margin-left: 2rem;margin-right: 2rem;margin-bottom: 2rem;">Teléfonos:</h3>
+          <p style="font-size: large;">099 485 699 | 099 861 140</p>
+      </div>
+      <div class="telegram">
+          <h3 style="margin-left: 2rem;margin-right: 2rem;margin-bottom: 2rem;">Dirección:</h3>
+          <p style="font-size: large;">Melitón Gonzalez 1341 - Buceo <br>
+              Montevideo - Uruguay</p>
+      </div>
+      </div>
+  </div>
+  </div>
+
+  <a style="display: flex;justify-content: center;bottom: 0;width: 100%;text-align: center;">Raventech.com</a>
+{% endblock %}
+</body>

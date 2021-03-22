@@ -1,0 +1,167 @@
+{% extends "base-admin.html" %}
+
+{% block content %}
+<div class="admin-father">
+    <div class="admin-searchpropiedad">
+        <!--Buscar propiedad-->
+        <p>
+            <button class="btn button" style="width: 100%;" type="button" data-toggle="collapse"
+                data-target="#buscar-propiedad" aria-expanded="false" aria-controls="collapseExample">
+                <i class="fas fa-search"></i> Buscar propiedad
+            </button>
+        </p>
+        <div class="collapse" id="buscar-propiedad">
+            <div class="card card-body" >
+    
+                <form  action="/admin-search" method="POST" class="admin-search center form-inline my-2 my-lg-0">
+                    <div class="form_background center">
+                      <div class="options-divider">
+                    <select name="operacion" class="custom-select  " id="inlineFormCustomSelectPref">
+                        <option value='' selected>Operación</option>
+                        <option >Venta</option>
+                        <option >Alquiler</option>
+                    </select>
+                    <select name="tipo_propiedad" class="custom-select  " id="inlineFormCustomSelectPref">
+                        <option value='' selected>Tipo</option>
+                        <option >Casa</option>
+                        <option >Apartamento</option>
+                        <option >Oficina</option>
+                    </select>
+                    <select placeholder="Habitaciones" name="dormitorios" class="custom-select  " id="inlineFormCustomSelectPref">
+                        <option value=''>Habitaciones</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5+">5 o más</option>
+                    </select>
+                    <select name="baños" class="custom-select  " id="inlineFormCustomSelectPref">
+                        <option value='' selected>Baños</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3+">3 o mas</option>
+                    </select>
+                    <select class="custom-select" id="barrio" name="barrio">
+                      <option selected="" value="">Zona</option>
+                      {% for barrio in barrios %}
+                      <option value="{{barrio.barrio}}">{{barrio.barrio}}</option>
+                      {% endfor %}
+                  </select>
+                    <select name="currency" class="custom-select  " id="inlineFormCustomSelectPref">
+                      <option selected value=""> U$S/$ </option>
+                      <option value="precio_dolares"> U$S </option>
+                      <option value="precio_pesos"> $ </option>
+                  </select>
+                </div>
+                  <div class="options-divider">
+                    <input name="precio_min" class="form-control " type="search" placeholder="Precio mínimo" aria-label="Search">
+                    <input name="precio_max" class="form-control " type="search" placeholder="Precio máximo" aria-label="Search">
+                    <input name="metraje_min" class="form-control " type="search" placeholder="Metraje mínimo" aria-label="Search">
+                    <input name="metraje_max" class="form-control " type="search" placeholder="Metraje máximo" aria-label="Search"><br>
+                    <input name="ref" class="form-control " type="search" placeholder="Ref" aria-label="Search">
+                  </div>  
+                  <button class="button btn btn-outline-success my-2 my-sm-0" type="submit" style="margin-top: 1rem;"><i class="fas fa-search"></i> Buscar</button>
+                  </div>    
+                </form>
+    
+            </div>
+        </div>
+    
+    </div>
+    </div>
+    <div class="social-nav">
+        <ul class="nav">
+            {% if not get_properties%}
+            <li class="nav-item">
+              <a class="nav-link calltoaction" style="border-radius: 5rem;background-color: rgba(255, 255, 255, 0.651); color: rgb(1, 167, 1);" href="/admin/insert" ><i class="fas fa-clinic-medical"></i> Añadir propiedad</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link" style="border-radius: 5rem;background-color: rgba(255, 255, 255, 0.651); color: rgb(1, 167, 1);" href="/admin/insert" ><i class="fas fa-clinic-medical"></i> Añadir propiedad</a>
+            </li>
+            {%endif%}
+          </ul>
+          <br>
+    </div>
+<div class="show-propiedades" style="overflow: scroll; width: 100%;">
+    <!--Ver propiedades-->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Propiedad</th>
+                <th scope="col">Título</th>
+                <th scope="col">Ref</th>
+                <th scope="col">Zona</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Venta</th>
+                <th scope="col">Alquiler</th>
+                <th scope="col">Propietario</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for propiedades in get_properties %}
+            <tr>
+                <td style="vertical-align: middle;" class="inmueble"><a href="/profile-admin/{{propiedades[0].id}}"><img src="data:image/png;base64,{{ propiedades[1] }}" alt=""
+                    style="width: 150px;"></a><br> {{ propiedades[0].direccion }}</td>
+                <td style="vertical-align: middle;font-size: 80%;" class="inmueble"> {{ propiedades[0].titulo }}</td>
+                <td style="vertical-align: middle;font-size: 80%;" class="inmueble"> {{ propiedades[0].ref }}</td>
+                <td style="vertical-align: middle;font-size: 80%;" class="titulo">{{ propiedades[0].tipo_propiedad.tipo_propiedad }} {{ propiedades[0].barrio.barrio }}</td>
+                <td class="tipo" style="vertical-align: middle;font-size: 80%;">{{ propiedades[0].tipo_propiedad.tipo_propiedad }}</td>
+                {% if propiedades[0].operaciones.operacion == "Venta" %}
+                    {%if propiedades[0].precio_dolares != none%}
+                    <td style="vertical-align: middle;font-size: 90%;" class="$venta">U$S {{ propiedades[0].precio_dolares }}</td>
+                    <td style="vertical-align: middle;font-size: 90%;" class="$alquiler">No</td>
+                    {% else %}
+                    <td style="vertical-align: middle;font-size: 90%;" class="$venta">$ {{ propiedades[0].precio_pesos }}</td>
+                    <td style="vertical-align: middle;font-size: 90%;" class="$alquiler">No</td>
+                    {%endif%}
+                {% else %}
+                    {%if propiedades[0].precio_pesos != none %}
+                    <td style="vertical-align: middle;font-size: 90%;" class="$venta">No</td>
+                    <td style="vertical-align: middle;font-size: 90%;" class="$alquiler">$ {{ propiedades[0].precio_pesos }}</td>
+                    {% else %}
+                    <td style="vertical-align: middle;font-size: 90%;" class="$venta">No</td>
+                    <td style="vertical-align: middle;font-size: 90%;" class="$alquiler">U$S {{ propiedades[0].precio_dolares }}</td>
+                    {% endif %}
+                {% endif %}
+                <td style="vertical-align: middle;font-size: 90%;" class="propietario">{{ propiedades[0].propietario.nombre}} {{propiedades[0].propietario.apellido }}</td>
+                <td style="vertical-align: middle;font-size: 90%;" ><a class="edit" href="/update/{{propiedades[0].id}}">Editar <i class="fas fa-pencil-alt"></i></a>
+                    <br><br><br>
+                    <a onclick="deleteProp({{propiedades[0].id}})" class="delete" href="#">Eliminar <i class="fas fa-times" aria-hidden='true'></i></a><br><br><br>
+                    {%if propiedades[0].pausado == 0 %}
+                    <a id="pausar" onclick="pauseProp({{propiedades[0].id}} , 'pausar')" class="delete" href="#">Pausar <i class="fas fa-pause-circle" aria-hidden='true'></i></a></td>
+                    {% else %}
+                    <a id="reanudar" onclick="pauseProp({{propiedades[0].id}} , 'reanudar')" class="delete" href="#">Reanudar <i class="fas fa-pause-circle" aria-hidden='true'></i></a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+<script>
+    function deleteProp(input) {
+        //e.preventDefault();
+        const confir = confirm("Seguro desea eliminar esta propiedad?");
+        if (confir == false) {
+            console.log("No eliminado")
+            
+        } else {
+            console.log("Eliminado")
+            window.location.href = '/delete/'+input;
+            //e.click();
+        }
+    }
+    function pauseProp(input, x) {
+        const confir = confirm("Seguro desea " + x + " esta propiedad?");
+        if (confir == false) {
+            console.log("No pausada")
+            
+        } else {
+            console.log("Pausada")
+            window.location.href = '/paused/'+input;
+        }
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,235 @@
+  <div class="first-row">
+            {% if get_properties.photos1 %}
+            <div class='db-foto' id = 'div{{loop.index}}'>
+                <div id={{loop.index}} class="div-foto"  style="width: 20vw; height: 25vh; background-image: url(data:image/png;base64,{{base64.b64encode(get_properties.photos1).decode('utf-8') }}); background-attachment: local; background-size: contain; background-repeat: no-repeat;">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <div class="dropdown-menu" style="" aria-labelledby="dropdownMenuButton">
+                        <input type="file" class="change {{loop.index}} form-control-file" name = 'change_pic[]' onchange="changePic(this);">Cambiar foto</input> 
+                        <a class="delete {{loop.index}} dropdown-item" onclick="deletePic(this);">Eliminar foto</a>            
+                    </div>
+                </div>
+            </div>
+            </div>
+            {% endif %}
+            {% if get_properties.photos2 %}
+            <div class='db-foto' id = 'div{{loop.index}}'>
+                <div id={{loop.index}} class="div-foto"  style="width: 15vw; height: 25vh; background-image: url(data:image/png;base64,{{base64.b64encode(get_properties.photos2).decode('utf-8') }}); background-attachment: local; background-size: contain; background-repeat: no-repeat;">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <div class="dropdown-menu" style="" aria-labelledby="dropdownMenuButton">
+                        <input type="file" class="change {{loop.index}} form-control-file" name = 'change_pic[]' onchange="changePic(this);">Cambiar foto</input> 
+                        <a class="delete {{loop.index}} dropdown-item" onclick="deletePic(this);">Eliminar foto</a>            
+                    </div>
+                </div>
+            </div>
+            </div>
+            {% endif %}
+            {% if get_properties.photos3 %}
+            <div class='db-foto' id = 'div{{loop.index}}'>
+                <div id={{loop.index}} class="div-foto"  style="width: 15vw; height: 25vh; background-image: url(data:image/png;base64,{{base64.b64encode(get_properties.photos3).decode('utf-8') }}); background-attachment: local; background-size: contain; background-repeat: no-repeat;">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <div class="dropdown-menu" style="" aria-labelledby="dropdownMenuButton">
+                        <input type="file" class="change {{loop.index}} form-control-file" name = 'change_pic[]' onchange="changePic(this);">Cambiar foto</input> 
+                        <a class="delete {{loop.index}} dropdown-item" onclick="deletePic(this);">Eliminar foto</a>            
+                    </div>
+                </div>
+            </div>
+            </div>
+            {% endif %}
+            {% if get_properties.photos4 %}
+            <div class='db-foto' id = 'div{{loop.index}}'>
+                <div id={{loop.index}} class="div-foto"  style="width: 15vw; height: 25vh; background-image: url(data:image/png;base64,{{base64.b64encode(get_properties.photos4).decode('utf-8') }}); background-attachment: local; background-size: contain; background-repeat: no-repeat;">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <div class="dropdown-menu" style="" aria-labelledby="dropdownMenuButton">
+                        <input type="file" class="change {{loop.index}} form-control-file" name = 'change_pic[]' onchange="changePic(this);">Cambiar foto</input> 
+                        <a class="delete {{loop.index}} dropdown-item" onclick="deletePic(this);">Eliminar foto</a>            
+                    </div>
+                </div>
+            </div>
+            </div>
+            {% endif %}
+            {% if get_properties.photos5 %}
+            <div class='db-foto' id = 'div{{loop.index}}'>
+                <div id={{loop.index}} class="div-foto"  style="width: 15vw; height: 25vh; background-image: url(data:image/png;base64,{{base64.b64encode(get_properties.photos5).decode('utf-8') }}); background-attachment: local; background-size: contain; background-repeat: no-repeat;">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <div class="dropdown-menu" style="" aria-labelledby="dropdownMenuButton">
+                        <input type="file" class="change {{loop.index}} form-control-file" name = 'change_pic[]' onchange="changePic(this);">Cambiar foto</input> 
+                        <a class="delete {{loop.index}} dropdown-item" onclick="deletePic(this);">Eliminar foto</a>            
+                    </div>
+                </div>
+            </div>
+            </div>
+            {% endif %}
+            </div><!-- / END 1ST ROW-->
+
+            <div class="second-row">
+            {% if get_properties.photos6 %}
+            <div class='db-foto' id = 'div{{loop.index}}'>
+                <div id={{loop.index}} class="div-foto"  style="width: 15vw; height: 25vh; background-image: url(data:image/png;base64,{{base64.b64encode(get_properties.photos6).decode('utf-8') }}); background-attachment: local; background-size: contain; background-repeat: no-repeat;">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <div class="dropdown-menu" style="" aria-labelledby="dropdownMenuButton">
+                        <input type="file" class="change {{loop.index}} form-control-file" name = 'change_pic[]' onchange="changePic(this);">Cambiar foto</input> 
+                        <a class="delete {{loop.index}} dropdown-item" onclick="deletePic(this);">Eliminar foto</a>            
+                    </div>
+                </div>
+            </div>
+            </div>
+            {% endif %}
+            {% if get_properties.photos7 %}
+            <div class='db-foto' id = 'div{{loop.index}}'>
+                <div id={{loop.index}} class="div-foto"  style="width: 15vw; height: 25vh; background-image: url(data:image/png;base64,{{base64.b64encode(get_properties.photos7).decode('utf-8') }}); background-attachment: local; background-size: contain; background-repeat: no-repeat;">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <div class="dropdown-menu" style="" aria-labelledby="dropdownMenuButton">
+                        <input type="file" class="change {{loop.index}} form-control-file" name = 'change_pic[]' onchange="changePic(this);">Cambiar foto</input> 
+                        <a class="delete {{loop.index}} dropdown-item" onclick="deletePic(this);">Eliminar foto</a>            
+                    </div>
+                </div>
+            </div>
+            </div>
+            {% endif %}
+            {% if get_properties.photos8 %}
+            <div class='db-foto' id = 'div{{loop.index}}'>
+                <div id={{loop.index}} class="div-foto"  style="width: 15vw; height: 25vh; background-image: url(data:image/png;base64,{{base64.b64encode(get_properties.photos8).decode('utf-8') }}); background-attachment: local; background-size: contain; background-repeat: no-repeat;">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <div class="dropdown-menu" style="" aria-labelledby="dropdownMenuButton">
+                        <input type="file" class="change {{loop.index}} form-control-file" name = 'change_pic[]' onchange="changePic(this);">Cambiar foto</input> 
+                        <a class="delete {{loop.index}} dropdown-item" onclick="deletePic(this);">Eliminar foto</a>            
+                    </div>
+                </div>
+            </div>
+            </div>
+            {% endif %}
+            {% if get_properties.photos9 %}
+            <div class='db-foto' id = 'div{{loop.index}}'>
+                <div id={{loop.index}} class="div-foto"  style="width: 15vw; height: 25vh; background-image: url(data:image/png;base64,{{base64.b64encode(get_properties.photos9).decode('utf-8') }}); background-attachment: local; background-size: contain; background-repeat: no-repeat;">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <div class="dropdown-menu" style="" aria-labelledby="dropdownMenuButton">
+                        <input type="file" class="change {{loop.index}} form-control-file" name = 'change_pic[]' onchange="changePic(this);">Cambiar foto</input> 
+                        <a class="delete {{loop.index}} dropdown-item" onclick="deletePic(this);">Eliminar foto</a>            
+                    </div>
+                </div>
+            </div>
+            </div>
+            {% endif %}
+            {% if get_properties.photos10 %}
+            <div class='db-foto' id = 'div{{loop.index}}'>
+                <div id={{loop.index}} class="div-foto"  style="width: 15vw; height: 25vh; background-image: url(data:image/png;base64,{{base64.b64encode(get_properties.photos10).decode('utf-8') }}); background-attachment: local; background-size: contain; background-repeat: no-repeat;">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <div class="dropdown-menu" style="" aria-labelledby="dropdownMenuButton">
+                        <input type="file" class="change {{loop.index}} form-control-file" name = 'change_pic[]' onchange="changePic(this);">Cambiar foto</input> 
+                        <a class="delete {{loop.index}} dropdown-item" onclick="deletePic(this);">Eliminar foto</a>            
+                    </div>
+                </div>
+            </div>
+            </div>
+            {% endif %}
+        </div><!-- / END 2nd ROW-->
+
+        <div class="third-row">
+            {% if get_properties.photos11 %}
+            <div class='db-foto' id = 'div{{loop.index}}'>
+                <div id={{loop.index}} class="div-foto"  style="width: 15vw; height: 25vh; background-image: url(data:image/png;base64,{{base64.b64encode(get_properties.photos11).decode('utf-8') }}); background-attachment: local; background-size: contain; background-repeat: no-repeat;">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <div class="dropdown-menu" style="" aria-labelledby="dropdownMenuButton">
+                        <input type="file" class="change {{loop.index}} form-control-file" name = 'change_pic[]' onchange="changePic(this);">Cambiar foto</input> 
+                        <a class="delete {{loop.index}} dropdown-item" onclick="deletePic(this);">Eliminar foto</a>            
+                    </div>
+                </div>
+            </div>
+            </div>
+            {% endif %}
+            {% if get_properties.photos12 %}
+            <div class='db-foto' id = 'div{{loop.index}}'>
+                <div id={{loop.index}} class="div-foto"  style="width: 15vw; height: 25vh; background-image: url(data:image/png;base64,{{base64.b64encode(get_properties.photos12).decode('utf-8') }}); background-attachment: local; background-size: contain; background-repeat: no-repeat;">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <div class="dropdown-menu" style="" aria-labelledby="dropdownMenuButton">
+                        <input type="file" class="change {{loop.index}} form-control-file" name = 'change_pic[]' onchange="changePic(this);">Cambiar foto</input> 
+                        <a class="delete {{loop.index}} dropdown-item" onclick="deletePic(this);">Eliminar foto</a>            
+                    </div>
+                </div>
+            </div>
+            </div>
+            {% endif %}
+            {% if get_properties.photos13 %}
+            <div class='db-foto' id = 'div{{loop.index}}'>
+                <div id={{loop.index}} class="div-foto"  style="width: 15vw; height: 25vh; background-image: url(data:image/png;base64,{{base64.b64encode(get_properties.photos13).decode('utf-8') }}); background-attachment: local; background-size: contain; background-repeat: no-repeat;">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <div class="dropdown-menu" style="" aria-labelledby="dropdownMenuButton">
+                        <input type="file" class="change {{loop.index}} form-control-file" name = 'change_pic[]' onchange="changePic(this);">Cambiar foto</input> 
+                        <a class="delete {{loop.index}} dropdown-item" onclick="deletePic(this);">Eliminar foto</a>            
+                    </div>
+                </div>
+            </div>
+            </div>
+            {% endif %}
+            {% if get_properties.photos14 %}
+            <div class='db-foto' id = 'div{{loop.index}}'>
+                <div id={{loop.index}} class="div-foto"  style="width: 15vw; height: 25vh; background-image: url(data:image/png;base64,{{base64.b64encode(get_properties.photos14).decode('utf-8') }}); background-attachment: local; background-size: contain; background-repeat: no-repeat;">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <div class="dropdown-menu" style="" aria-labelledby="dropdownMenuButton">
+                        <input type="file" class="change {{loop.index}} form-control-file" name = 'change_pic[]' onchange="changePic(this);">Cambiar foto</input> 
+                        <a class="delete {{loop.index}} dropdown-item" onclick="deletePic(this);">Eliminar foto</a>            
+                    </div>
+                </div>
+            </div>
+            </div>
+            {% endif %}
+            {% if get_properties.photos15 %}
+            <div class='db-foto' id = 'div{{loop.index}}'>
+                <div id={{loop.index}} class="div-foto"  style="width: 15vw; height: 25vh; background-image: url(data:image/png;base64,{{base64.b64encode(get_properties.photos15).decode('utf-8') }}); background-attachment: local; background-size: contain; background-repeat: no-repeat;">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <div class="dropdown-menu" style="" aria-labelledby="dropdownMenuButton">
+                        <input type="file" class="change {{loop.index}} form-control-file" name = 'change_pic[]' onchange="changePic(this);">Cambiar foto</input> 
+                        <a class="delete {{loop.index}} dropdown-item" onclick="deletePic(this);">Eliminar foto</a>            
+                    </div>
+                </div>
+            </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+        <!-- / END 3rd ROW-->

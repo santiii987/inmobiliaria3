@@ -1,0 +1,191 @@
+<html>
+    <title>Ingreso</title>
+    <body>
+        <form method='POST' action="" enctype="multipart/form-data">
+            {{ form.csrf_token }}
+            <div>
+                {{form.precio_dolares.label()}}
+                {%if form.precio_dolares.errors%}
+                    {{form.precio_dolares()}}
+                    {%for error in form.precio_dolares.errors%}
+                        <span>{{error}}</span>
+                    {%endfor%}
+                {%else%}
+                    {{form.precio_dolares()}}
+                {%endif%}
+            </div>
+            <div>
+                {{form.precio_pesos.label()}}
+                {%if form.precio_pesos.errors%}
+                    {{form.precio_pesos()}}
+                    {%for error in form.precio_pesos.errors%}
+                        <span>{{error}}</span>
+                    {%endfor%}
+                {%else%}
+                    {{form.precio_pesos()}}
+                {%endif%}
+            </div>
+            <div>
+                {{form.metraje_edificio.label()}}
+                {%if form.metraje_edificio.errors%}
+                    {{form.metraje_edificio()}}
+                    {%for error in form.metraje_edificio.errors%}
+                        <span>{{error}}</span>
+                    {%endfor%}
+                {%else%}
+                    {{form.metraje_edificio()}}
+                {%endif%}
+            </div>
+            <div>
+                {{form.metraje_patio.label()}}
+                {%if form.metraje_patio.errors%}
+                    {{form.metraje_patio()}}
+                    {%for error in form.metraje_patio.errors%}
+                        <span>{{error}}</span>
+                    {%endfor%}
+                {%else%}
+                    {{form.metraje_patio()}}
+                {%endif%}
+            </div>
+            <div>
+                {{form.operacion.label()}}
+                {%if form.operacion.errors%}
+                    {{form.operacion()}}
+                    {%for error in form.operacion.errors%}
+                        <span>{{error}}</span>
+                    {%endfor%}
+                {%else%}
+                    {{form.operacion()}}
+                {%endif%}
+            </div>
+            <div>
+                {{form.tipo_propiedad.label()}}
+                {%if form.tipo_propiedad.errors%}
+                    {{form.tipo_propiedad()}}
+                    {%for error in form.tipo_propiedad.errors%}
+                        <span>{{error}}</span>
+                    {%endfor%}
+                {%else%}
+                    {{form.tipo_propiedad()}}
+                {%endif%}
+            </div>
+            <div>
+                {{form.barrio.label()}}
+                {%if form.barrio.errors%}
+                    {{form.barrio()}}
+                    {%for error in form.barrio.errors%}
+                        <span>{{error}}</span>
+                    {%endfor%}
+                {%else%}
+                    {{form.barrio()}}
+                {%endif%}
+            </div>
+            <div>
+                {{form.baños.label()}}
+                {%if form.baños.errors%}
+                    {{form.baños()}}
+                    {%for error in form.baños.errors%}
+                        <span>{{error}}</span>
+                    {%endfor%}
+                {%else%}
+                    {{form.baños()}}
+                {%endif%}
+            </div>
+            <div>
+                {{form.estado.label()}}
+                {%if form.estado.errors%}
+                    {{form.estado()}}
+                    {%for error in form.estado.errors%}
+                        <span>{{error}}</span>
+                    {%endfor%}
+                {%else%}
+                    {{form.estado()}}
+                {%endif%}
+            </div>
+            <div>
+                {{form.dormitorios.label()}}
+                {%if form.dormitorios.errors%}
+                    {{form.dormitorios()}}
+                    {%for error in form.dormitorios.errors%}
+                        <span>{{error}}</span>
+                    {%endfor%}
+                {%else%}
+                    {{form.dormitorios()}}
+                {%endif%}
+            </div>
+            <div>
+                {{form.orientacion.label()}}
+                {%if form.orientacion.errors%}
+                    {{form.orientacion()}}
+                    {%for error in form.orientacion.errors%}
+                        <span>{{error}}</span>
+                    {%endfor%}
+                {%else%}
+                    {{form.orientacion()}}
+                {%endif%}
+            </div>
+            <div>
+                {{form.disposicion.label()}}
+                {%if form.disposicion.errors%}
+                    {{form.disposicion()}}
+                    {%for error in form.disposicion.errors%}
+                        <span>{{error}}</span>
+                    {%endfor%}
+                {%else%}
+                    {{form.disposicion()}}
+                {%endif%}
+            </div>
+            <div>
+                {{form.garaje.label()}}
+                {%if form.garaje.errors%}
+                    {{form.garaje()}}
+                    {%for error in form.garaje.errors%}
+                        <span>{{error}}</span>
+                    {%endfor%}
+                {%else%}
+                    {{form.garaje()}}
+                {%endif%}
+            </div>
+            <div>
+                {{form.n_plantas.label()}}
+                {%if form.n_plantas.errors%}
+                    {{form.n_plantas()}}
+                    {%for error in form.n_plantas.errors%}
+                        <span>{{error}}</span>
+                    {%endfor%}
+                {%else%}
+                    {{form.n_plantas()}}
+                {%endif%}
+            </div>
+            <div>
+                {{form.comfort.hidden_tag()}}
+                {%for comfort in form.comfort if comfort.widget.input_type != 'hidden'%}
+                        {{comfort.label()}}
+                        {{comfort()}}
+                {%endfor%}
+            </div>
+            <div>
+                {{form.seguridad.hidden_tag()}}
+                {%for seguridad in form.seguridad if seguridad.widget.input_type != 'hidden' %}
+                    {{seguridad.label()}}
+                    {{seguridad()}}
+                {%endfor%}
+            </div>
+            <div>
+                {{form.fotos.label()}}
+                {%if form.fotos.errors%}
+                    {{form.fotos()}}
+                    {%for error in form.fotos.errors%}
+                        <span>{{error}}</span>
+                    {%endfor%}
+                {%else%}
+                    {{form.fotos()}}
+                {%endif%}
+
+            </div>
+            <div>
+                {{form.submit()}}
+            </div>
+        </form>
+    </body>
+</html>

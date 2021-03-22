@@ -1,0 +1,16 @@
+body{
+
+}
+.destacadas{
+    margin-top: 10rem;
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    width: 100%;
+}
+.base-navbar{
+    position: fixed;
+    background-color: green;
+    align-items: center;
+}
+

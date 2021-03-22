@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<script>
+  window.onload(navi())
+  function navi() {
+    const navBar = document.getElementById("navigation");
+    const burger = document.getElementById("burger");
+
+    burger.style.marginRight="0.8rem"
+    navBar.style.marginTop="0%"
+    navBar.style.backgroundColor="rgb(77, 76, 76)"
+    navBar.style.height="5rem"
+    navBar.style.width="100%"
+  }
+  
+</script>
+<div class="father">
+  <div id="footer" class="division">
+    <div class="subdivision object invisible">
+  <form action="/contact-mail" method="POST" enctype="multipart/form-data"
+  name="EmailForm" style="display: flex;flex-direction: column;" name=”EmailForm”>
+      <div class="inputs" style="text-align: left;">
+          <h3>Comunícate con nosotros:</h3>
+          <div class="inputs">
+              <label for="">Nombre completo*</label><br><input type="text" name="contact-name" required="text">
+          </div>
+          <div class="inputs">
+            <label for="">Tel / cel</label><br><input name="contact-phone" type="number" >
+          </div>
+          <div class="inputs">
+              <label for="">Email*</label><br><input type="email" required="required" name="contact-email" 
+              type="email">
+          </div>
+          <div class="inputs">
+              <label for="">Mensaje*</label><br>
+              <textarea rows="10" cols="30" required="required" name="contact-question" type="text">
+              </textarea>
+          </div>
+      </div>
+      <input type="submit" value="Enviar">
+  </form>
+</div>
+<div class="subdivision object invisible">
+  Puedes preguntarnos cualquier duda, <br> responderémos a la brevedad posible. <br> Gracias por elegirnos.
+</div>
+</div>
+</div>
+{% endblock%}

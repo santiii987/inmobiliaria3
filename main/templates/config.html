@@ -1,0 +1,58 @@
+{% extends "base-admin.html"%}
+{% block content%}
+<div class="father" style="justify-content: center;padding: 3rem;">
+    <div class="child config-child" style="display: none;">
+        <div class="admin-email">
+          <h3>Email principal</h3>
+<form action="/insert-miemail" class="admin-email" method="post">
+    <div class="form-group">
+      <input name="miemail-email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingresar Email">
+    </div>
+    <div class="form-group">
+      <input name="miemail-pass" type="password" class="form-control" id="exampleInputPassword1" placeholder="Contraseña">
+    </div>
+    <button style="width: 100%;" type="submit" class="btn button btn-primary">Ingresar</button>
+  </form>
+</div>
+</div>
+
+<div class="div_line" style="display: none;"></div>
+
+<div class="child config-child">
+    <div class="add-admin">
+      <h3>Añadir Administrador</h3>
+<form class="admin-regist" id="admin-reg" action="/regist-admin" method="post">
+<div class="form-group" >
+  <input name="admin-user" type="text" class="form-control" placeholder="Usuario">
+</div>
+<div class="form-group">
+  <input name="admin-pass" type="password" class="form-control" id="pass" placeholder="Contraseña">
+</div>
+<div class="form-group">
+    <input name="admin-pass" type="password" class="form-control" id="pass-re" placeholder="Repite contraseña"><p id="notif" style="display: none;"><strong style="color: red;">No coincide con la contraseña</strong></p>
+  </div>
+</form>
+</div>
+<div >
+<button style="width:100%;" onclick="passCatch()" class="btn button btn-primary">Ingresar</button>
+</div>
+
+</div>
+</div>
+<script>
+    
+    function passCatch() {
+        let pass = document.getElementById('pass');
+        let repass = document.getElementById('pass-re');
+        let form = document.getElementById('admin-reg');
+        console.log(pass)
+        console.log(repass)
+        if (pass.value != repass.value) {
+            document.getElementById("notif").style.display = "block";
+        
+        } else {
+            form.submit()
+        }
+    }
+</script>
+  {% endblock %}

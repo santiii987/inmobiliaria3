@@ -1,0 +1,492 @@
+{% extends "base-admin.html" %}
+{% block content %}
+<div class="update-father">
+<form method='POST' action="/edit-property/{{id}}" id='da-modal' enctype="multipart/form-data" onsubmit='groupPhs();'>
+    {{ form.csrf_token }}
+    <div>
+        {{form.ref.label()}}
+        {%if form.ref.errors%}
+        {{form.ref()}}
+        {%for error in form.ref.errors%}
+        <strong style="color: red;"><span>{{error}}</span></strong>
+        {%endfor%}
+        {%else%}
+        {{form.ref()}}
+        {%endif%}
+    </div>
+    <div>
+        {{form.titulo.label()}}
+        {%if form.titulo.errors%}
+        {{form.titulo()}}
+        {{form.titulo()}}
+        {%for error in form.titulo.errors%}
+        <strong style="color: red;"><span>{{error}}</span></strong>
+        {%endfor%}
+        {%else%}
+        {{form.titulo()}}
+        {%endif%}
+    </div>
+    <div>
+        {{form.precio_dolares.label()}}
+        {%if form.precio_dolares.errors%}
+        {{form.precio_dolares()}}
+        {{form.precio_dolares()}}
+        {%for error in form.precio_dolares.errors%}
+        <strong style="color: red;"><span>{{error}}</span></strong>
+        {%endfor%}
+        {%else%}
+        {{form.precio_dolares()}}
+        {%endif%}
+    </div>
+    <div>
+        {{form.precio_pesos.label()}}
+        {%if form.precio_pesos.errors%}
+        {{form.precio_pesos()}}
+        {%for error in form.precio_pesos.errors%}
+        <strong style="color: red;"><span>{{error}}</span></strong>
+        {%endfor%}
+        {%else%}
+        {{form.precio_pesos.label()}}
+        {{form.precio_pesos()}}
+        {%endif%}
+    </div>
+    <br>
+    <div class="fotos">
+
+    <div class="update-fotos" style="text-align: center;border-top: rgba(128, 128, 128, 0.363) 1px solid;border-bottom: rgba(128, 128, 128, 0.363) 1px solid;padding: 1rem;">
+        <span><h3>Fotos:  <strong><span id = 'counter'>0</span>/15</span></h3></strong>
+    <div class="first-row" >
+    {% for foto in fotos %}
+        {% if foto %}
+        <div class='db_foto_up' style="padding: 0.5rem;" id = 'div{{loop.index}}'>
+            <div class="dropdown">
+                <a class="" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img id={{loop.index}} height="200" class="div-foto" src="data:image/png;base64,{{foto}}"> 
+                </a>
+                <div class="dropdown-menu" style="padding: 1rem;" aria-labelledby="dropdownMenuButton">
+                    <input type="file" class="change {{loop.index}} form-control-file" name = 'change_pic[]' onchange="changePic(this);">Cambiar foto</input> 
+                    <a class="delete {{loop.index}} dropdown-item" onclick="deletePic(this);">Eliminar foto</a>            
+                </div>
+            </div>
+        </div>
+        {%else%}
+        <div class='db_empty_fotos_up' style="padding: 0.5rem;" id = 'div{{loop.index}}' style="border:2px solid grey;height: 300px;width:200px;">
+            <img src="" id={{loop.index}}  height="200">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-plus"></i>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <input type="file" class="change {{loop.index}} form-control-file" name = 'change_pic[]' onchange="changePic(this);">Cambiar foto</input> 
+                    <a class="delete {{loop.index}} dropdown-item" onclick="deletePic(this);">Eliminar foto</a>            
+                </div>
+            </div>
+        </div>
+        {%endif%}
+    {%endfor%}
+</div>
+<div class="second-row">
+    {% for foto in fotos_2%}
+    {% if foto %}
+    <div class='db_foto_up' style="padding: 0.5rem;" id = 'div{{loop.index+5}}'>
+        <div class="dropdown">
+            <a class="" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <img id={{loop.index+5}} height="200" class="div-foto" src="data:image/png;base64,{{foto}}">
+            </a>
+            <div class="dropdown-menu" style="padding: 1rem;" aria-labelledby="dropdownMenuButton">
+                <input type="file" class="change {{loop.index+5}} form-control-file" name = 'change_pic[]' onchange="changePic(this);">Cambiar foto</input> 
+                <a class="delete {{loop.index+5}} dropdown-item" onclick="deletePic(this);">Eliminar foto</a>            
+            </div>
+        </div>
+    </div>
+    {%else%}
+    <div class='db_empty_fotos_up' style="padding: 0.5rem;" id = 'div{{loop.index+5}}' style="border:2px solid grey;height: 300px;width:200px;">
+        <img src="" id={{loop.index+5}}  height="200">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-plus"></i>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <input type="file" class="change {{loop.index+5}} form-control-file" name = 'change_pic[]' onchange="changePic(this);">Cambiar foto</input> 
+                <a class="delete {{loop.index+5}} dropdown-item" onclick="deletePic(this);">Eliminar foto</a>            
+            </div>
+        </div>
+    </div>
+    {%endif%}
+    {%endfor%}
+</div>
+<div class="third-row">
+    {% for foto in fotos_3%}
+        {% if foto %}
+        <div class='db_foto_up' style="padding: 0.5rem;" id = 'div{{loop.index+10}}'>
+            <div class="dropdown">
+                <a class="" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img id={{loop.index+10}} height="200" class="div-foto" src="data:image/png;base64,{{foto}}">
+                </a>
+                <div class="dropdown-menu" style="padding: 1rem;" aria-labelledby="dropdownMenuButton">
+                    <input type="file" class="change {{loop.index+10}} form-control-file" name = 'change_pic[]' onchange="changePic(this);">Cambiar foto</input> 
+                    <a class="delete {{loop.index+10}} dropdown-item" onclick="deletePic(this);">Eliminar foto</a>            
+                </div>
+            </div>
+        </div>
+        {%else%}
+        <div class='db_empty_fotos_up' style="padding: 0.5rem;" id = 'div{{loop.index+10}}' style="border:2px solid grey;height: 300px;width:200px;">
+            <img src="" id={{loop.index+10}}  height="200">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-plus"></i>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <input type="file" class="change {{loop.index+10}} form-control-file" name = 'change_pic[]' onchange="changePic(this);">Cambiar foto</input> 
+                    <a class="delete {{loop.index+10}} dropdown-item" onclick="deletePic(this);">Eliminar foto</a>            
+                </div>
+            </div>
+        </div>
+        {%endif%}
+    {%endfor%}
+</div>
+    </div>
+    </div>
+<br>
+<div class="rest-of-data">
+    
+    <label for="fotos">Ingresar <strong class="calltoaction" style="color:red;" >Nuevas</strong> Fotos</label> <input id="fotos" multiple="" name="pics" onchange="readURL(this);"
+    type="file"></input>
+    
+    </div>
+    <script >
+        collection = new DataTransfer();
+        fotos = document.getElementsByClassName('db_foto_up').length
+        document.getElementById('counter').innerHTML = fotos
+        function groupPhs(){
+            phsForm = document.getElementById('fotos')
+            phsForm.files = collection.files
+        }
+        function readURL(input) {
+            if (input.files) {
+                var imgs = input.files
+                console.log(collection)
+                for (element of imgs){
+                    fotos += 1 ;
+                    collection.items.add(element)
+                    console.log(element)
+                    let reader = new FileReader();   
+                    reader.onload = function (e) {
+                        aux_counter = 0
+                        item = document.createElement('div');
+                        item.classList.add('carousel-item');
+                        image = document.createElement('img');
+                        image.setAttribute('src',e.target.result);
+                        item.appendChild(image);
+                        console.log(item);
+                        caca = document.getElementsByClassName('carousel-inner')[0].appendChild(item);
+                        console.log(document.getElementsByClassName('carousel-inner')[0]);
+                        counter = document.getElementById('counter').innerHTML = fotos;
+                        console.log(caca)
+                        a = document.getElementsByClassName('carousel-item');
+                        console.log(a)
+                        for (var i of a){
+                            i.classList.remove('active')
+                        } 
+                        a[0].classList.add('active')
+                    };
+                    reader.readAsDataURL(element);
+                }   
+            }
+        }
+        function addParam(param) {
+            form = document.getElementById('da-modal')
+            if (form.getAttribute('action').indexOf('?') != -1){
+                form_action = form.setAttribute('action',form.getAttribute('action') + '&' + param);
+                console.log('asdadasddsa0',form_action);
+            }else{
+                form_action = form.setAttribute('action',form.getAttribute('action') + '?' + param);
+                console.log('frghgfgfff',form_action);
+            }
+            console.log(form.getAttribute('action'))
+        }
+
+        function deletePic(input) {
+            param = input.classList[0] + '[]=' + input.classList[1];
+            addParam(param)
+            imgDel = document.getElementById('div' + input.classList[1]).remove();
+        }
+
+        function changePic(input) {
+            if (input.files){
+                param = input.classList[0] + '[]=' + input.classList[1];
+                addParam(param);
+                let reader = new FileReader();
+                reader.onload = function(e){
+                    document.getElementById(input.classList[1]).setAttribute('src',e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+    
+<script>
+        function getProp(prop){
+           datos = prop.split(" ")
+           document.getElementById('nombre').value = datos[0]
+           document.getElementById("apellido").value = datos[1]
+           document.getElementById("email").value = datos[3]
+           document.getElementById("telefono").value = datos[2]
+           console.log(prop,document.getElementById('nombre'))
+
+        }
+    </script>
+    <div>
+        {{form.metraje_edificio.label()}}
+        {%if form.metraje_edificio.errors%}
+        {{form.metraje_edificio()}}
+        {%for error in form.metraje_edificio.errors%}
+        <strong style="color: red;"><span>{{error}}</span></strong>
+        {%endfor%}
+        {%else%}
+        {{form.metraje_edificio()}}
+        {%endif%}
+    </div>
+    <div>
+        {{form.metraje_patio.label()}}
+        {%if form.metraje_patio.errors%}
+        {{form.metraje_patio()}}
+        {%for error in form.metraje_patio.errors%}
+        <strong style="color: red;"><span>{{error}}</span></strong>
+        {%endfor%}
+        {%else%}
+        {{form.metraje_patio()}}
+        {%endif%}
+    </div>
+    <div>
+        {{form.operacion.label()}}
+        {%if form.operacion.errors%}
+        {{form.operacion()}}
+        {%for error in form.operacion.errors%}
+        <strong style="color: red;"><span>{{error}}</span></strong>
+        {%endfor%}
+        {%else%}
+        {{form.operacion()}}
+        {%endif%}
+    </div>
+    <div>
+        {{form.tipo_propiedad.label()}}
+        {%if form.tipo_propiedad.errors%}
+        {{form.tipo_propiedad()}}
+        {%for error in form.tipo_propiedad.errors%}
+        <strong style="color: red;"><span>{{error}}</span></strong>
+        {%endfor%}
+        {%else%}
+        {{form.tipo_propiedad()}}
+        {%endif%}
+    </div>
+    <div>
+        {{form.barrio.label()}}
+        {%if form.barrio.errors%}
+        {{form.barrio()}}
+        {%for error in form.barrio.errors%}
+        <strong style="color: red;"><span>{{error}}</span></strong>
+        {%endfor%}
+        {%else%}
+        {{form.barrio()}}
+        {%endif%}
+    </div>
+    <div>
+        {{form.direccion.label()}}
+        {%if form.direccion.errors%}
+        {{form.direccion()}}
+        {%for error in form.direccion.errors%}
+        <strong style="color: red;"><span>{{error}}</span></strong>
+        {%endfor%}
+        {%else%}
+        {{form.direccion()}}
+        {%endif%}
+    </div>
+    <div>
+        {{form.distancia_al_mar.label()}}
+        {%if form.distancia_al_mar.errors%}
+        {{form.distancia_al_mar()}}
+        {%for error in form.distancia_al_mar.errors%}
+        <strong style="color: red;"><span>{{error}}</span></strong>
+        {%endfor%}
+        {%else%}
+        {{form.distancia_al_mar()}}
+        {%endif%}
+    </div>
+    <div>
+        {{form.baños.label()}}
+        {%if form.baños.errors%}
+        {{form.baños()}}
+        {%for error in form.baños.errors%}
+        <strong style="color: red;"><span>{{error}}</span></strong>
+        {%endfor%}
+        {%else%}
+        {{form.baños()}}
+        {%endif%}
+    </div>
+    <div>
+        {{form.estado.label()}}
+        {%if form.estado.errors%}
+        {{form.estado()}}
+        {%for error in form.estado.errors%}
+        <strong style="color: red;"><span>{{error}}</span></strong>
+        {%endfor%}
+        {%else%}
+        {{form.estado()}}
+        {%endif%}
+    </div>
+    <div>
+        {{form.dormitorios.label()}}
+        {%if form.dormitorios.errors%}
+        {{form.dormitorios()}}
+        {%for error in form.dormitorios.errors%}
+        <strong style="color: red;"><span>{{error}}</span></strong>
+        {%endfor%}
+        {%else%}
+        {{form.dormitorios()}}
+        {%endif%}
+    </div>
+    <div>
+        {{form.orientacion.label()}}
+        {%if form.orientacion.errors%}
+        {{form.orientacion()}}
+        {%for error in form.orientacion.errors%}
+        <strong style="color: red;"><span>{{error}}</span></strong>
+        {%endfor%}
+        {%else%}
+        {{form.orientacion()}}
+        {%endif%}
+    </div>
+    <div>
+        {{form.disposicion.label()}}
+        {%if form.disposicion.errors%}
+        {{form.disposicion()}}
+        {%for error in form.disposicion.errors%}
+        <strong style="color: red;"><span>{{error}}</span></strong>
+        {%endfor%}
+        {%else%}
+        {{form.disposicion()}}
+        {%endif%}
+    </div>
+    <div>
+        {{form.garaje.label()}}
+        {%if form.garaje.errors%}
+        {{form.garaje()}}
+        {%for error in form.garaje.errors%}
+        <strong style="color: red;"><span>{{error}}</span></strong>
+        {%endfor%}
+        {%else%}
+        {{form.garaje()}}
+        {%endif%}
+    </div>
+    <div>
+        {{form.n_plantas.label()}}
+        {%if form.n_plantas.errors%}
+        {{form.n_plantas()}}
+        {%for error in form.n_plantas.errors%}
+        <strong style="color: red;"><span>{{error}}</span></strong>
+        {%endfor%}
+        {%else%}
+        {{form.n_plantas()}}
+        {%endif%}
+    </div>
+    <br>
+    <div class="comfort-security" styles="background-color: black;">
+        <h3>Comfort:</h3>
+        <div class="comfort" styles="background-color: black;">
+            {{form.comfort.hidden_tag()}}
+            {%for comfort in form.comfort if comfort.widget.input_type != 'hidden'%}
+            {{comfort.label()}}
+            {{comfort()}}
+            {%endfor%}
+        </div>
+        <br>
+        <h3>Seguridad:</h3>
+        <div class="security">
+            {{form.seguridad.hidden_tag()}}
+            {%for seguridad in form.seguridad if seguridad.widget.input_type != 'hidden'%}
+            {{seguridad.label()}}
+            {{seguridad()}}
+            {%endfor%}
+        </div>
+    </div>
+    <br>
+    <h3>Propietario:</h3>
+    <label>Propietarios registrados:</label>
+    <select onchange="getProp(this.value)">
+        <option value='   '></option>
+    {% for propietario in propietarios%}
+    <!-- El nombre no puede tener espacios ni el apellido -->
+        <option value="{{propietario.nombre}} {{propietario.apellido}} {{propietario.telefono}} {{propietario.email}}" >{{propietario.nombre}} {{propietario.apellido}} {{propietario.telefono}}</option>
+    {%endfor%}
+    </select> 
+    <!-- <label for="fotos">Ingresar Fotos</label> <input id="fotos" multiple="" name="pics" onchange="readURL(this);"
+    type="file">
+    <span>Fotos:  <span id = 'counter'>0</span>/15</span> -->
+    <div>
+        {{form.nombre.label()}}
+        {%if form.nombre.errors%}
+        {{form.nombre()}}
+        {%for error in form.nombre.errors%}
+        <strong style="color: red;"><span>{{error}}</span></strong>
+        {%endfor%}
+        {%else%}
+        {{form.nombre()}}
+        {%endif%}
+    </div>
+    <div>
+        {{form.apellido.label()}}
+        {%if form.apellido.errors%}
+        {{form.apellido()}}
+        {%for error in form.apellido.errors%}
+        <strong style="color: red;"><span>{{error}}</span></strong>
+        {%endfor%}
+        {%else%}
+        {{form.apellido()}}
+        {%endif%}
+    </div>
+    <div>
+        {{form.telefono.label()}}
+        {%if form.telefono.errors%}
+        {{form.telefono()}}
+        {%for error in form.telefono.errors%}
+        <strong style="color: red;"><span>{{error}}</span></strong>
+        {%endfor%}
+        {%else%}
+        {{form.telefono()}}
+        {%endif%}
+    </div>
+    <div>
+        {{form.email.label()}}
+        {%if form.email.errors%}
+        {{form.email()}}
+        {%for error in form.email.errors%}
+        <strong style="color: red;"><span>{{error}}</span></strong>
+        {%endfor%}
+        {%else%}
+        {{form.email()}}
+        {%endif%}
+    </div>
+
+    <br>
+    <h3>Descripción:</h3>
+    <div>
+        {%if form.descripcion.errors%}
+        {{form.descripcion()}}
+        {%for error in form.descripcion.errors%}
+        <strong style="color: red;"><span>{{error}}</span></strong>
+        {%endfor%}
+        {%else%}
+        {{form.descripcion()}}
+        {%endif%}
+    </div>
+    <div class="modal-footer">
+        <a type="button" class="btn button contact-enviar" style="background-color:grey" href="/admin/home">Cerrar</a>
+        <button type="submit" class="btn button contact-enviar">Insertar</button>
+        <div>
+
+        </div>
+</form>
+</div>
+
+{% endblock %}

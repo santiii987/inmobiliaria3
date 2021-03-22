@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+    {% block banner %}
+    <div class="banner">
+        <div class="matrix"></div>
+    <div id="move-out" class="banner-p slide-in div404">
+        <h3 class="banner-title">Una cosa es cierta, las propiedades 
+            <strong class="banner-title-strong">no</strong>  quiebran.</h3>
+        </div>
+    </div>
+    {% endblock %}
+{% block content %}
+    <div class="index">
+
+<div class="father" style="margin-top:5rem ;">
+        <div class="special-division object invisible division-0">
+        <div class="title">
+            <h1>Propiedades destacadas:</h1>
+        </div>
+        <div class="description">
+            <p>
+                Aquí encontrarás nuestras propiedades clasificadas como destacadas. 
+            </p>
+        </div>
+    </div>
+    <div class="special-division" style="margin-top:5rem ">
+            {% for array in get_properties %}
+            <div class="grid-container object">
+            {% for propiedades in array %}
+            <a class="grid-item" href="/profile/{{propiedades[0].id}}">
+                <div class="grid-detail">
+                    <div class="prop-title" style="font-size: large;">
+                        {{ propiedades[0].titulo}}
+                        <br>
+                        {{propiedades[0].operaciones.operacion}}: {% if propiedades[0].operaciones.operacion == "Venta" %}
+                        {%if propiedades[0].precio_dolares != none%}
+                        u$s&nbsp;<strong class="number_dots" style="width: 100%;">{{ propiedades[0].precio_dolares }}</strong>
+                        {% else %}
+                        $&nbsp;<strong class="number_dots"style="width: 100%;">{{ propiedades[0].precio_pesos }}</strong>
+                        {%endif%}
+                    {% else %}
+                        {%if propiedades[0].precio_pesos != none %}
+                        $&nbsp;<strong class="number_dots"style="width: 100%;">{{ propiedades[0].precio_pesos }}</strong>
+                        {% else %}
+                        u$s&nbsp;<strong class="number_dots" style="width: 100%;">{{ propiedades[0].precio_dolares }}</strong>
+                        {% endif %}
+                    {% endif %}
+                    </div>
+                    <span class="prop-info inactive" style="font-size: medium;">
+                        <p class="fade-in">
+                        Baños: {{ propiedades[0].baños }} | 
+                        Habitaciones: {{ propiedades[0].dormitorios }} | 
+                        Edif: <strong style="font-weight: normal;">{{ propiedades[0].metraje_edificio}} m2</strong style="font-weight: normal;">
+                        </p>
+                        </span>
+                </div>
+                <img class="propimg grayscale" src="data:image/png;base64,{{ propiedades[1] }}" alt="">
+            </a>
+            {%endfor%}
+          </div>
+          {%endfor%}
+        </div>
+        <a href="/page" class="more-props object invisible"><h3> Ver más propiedades </h3></a>
+</div>
+<script> 
+    var target = document.querySelectorAll(".number_dots");
+      target.forEach(element => {
+        var priceString = String(element.innerHTML)
+        console.log(priceString)
+      if (priceString.length == 4) {
+              priceDot = priceString.substring(0,1) + "." + priceString.substring(1, 4);
+              element.innerHTML = priceDot
+            } else if (priceString.length == 5) {
+              priceDot = priceString.substring(0, 2) + "." + priceString.substring(2, 6);
+              element.innerHTML = priceDot
+            } else if (priceString.length == 6) {
+              priceDot = priceString.substring(0,3) + "." + priceString.substring(3, 6)
+              element.innerHTML = priceDot
+            } else if (priceString.length == 7) {
+              priceDot = priceString.substring(0, 1) + "." + priceString.substring(1, 4) + "." + priceString.substring(4, 7);
+              element.innerHTML = priceDot
+            }  else if (priceString.length == 8) {
+              priceDot = priceString.substring(0, 2) + "." + priceString.substring(2, 5) + "." + priceString.substring(5, 8);
+              element.innerHTML = priceDot
+            } else if (priceString.length == 9) {
+              priceDot = priceString.substring(0, 3) + "." + priceString.substring(3, 6) + "." + priceString.substring(6, 9);
+              element.innerHTML = priceDot
+            } 
+      });
+  </script>
+<div id="about-us" class="father">
+    <div class="division division-1">
+        <div class="subdivsion object invisible">
+             <img  src="{{url_for('static', filename='institution.png')}}" alt="Image">
+        </div>
+        <div class="subdivision object invisible subdivision-1">
+            <h2 style="color:rgb(1, 167, 1);">Institucional:</h2>
+            <p style="font-size: large;"> Pallares & Asociados es una empresa familiar dedicada desde sus comienzos al sector inmobiliario. Silvia Pallares Bruzzone, directora de la firma, acompaña la actividad de sus padres Manuel Pallares y Myriam Bruzzone, fundadores de inmobiliaria Pallares Bruzzone SRL; incursionando en sus estudios terciarios en el área notarial.
+                En su interés de brindar un asesoramiento integral de inversión a sus clientes, amplia el espectro ofreciendo una amplia gama de productos financieros calificados de primera línea como fondos de inversión, fondos de retiro y seguros de vida y ahorro.
+                Finalmente todas estas opciones la llevaron a determinar que el mercado inmobiliario si bien presenta oscilaciones, sigue siendo la opción más segura que puede ofrecer a sus clientes, por lo cual se hace eco del slogan familiar: " una cosa es cierta, las propiedades no quiebran".
+                Hoy la empresa, ya contando con su tercera generación, es reconocida por su profesionalidad, compromiso y asesoramiento personalizado.</p>
+        </div>
+    </div>  
+</div>
+
+<div class="father" style="background-color: rgb(1, 167, 1);">
+    <div id="division-2" class="special-division">
+        <div class="title"><h1 style="color: white;">Comencemos...</h1></div>
+        <div class="description"><p style="color:white;">
+            En Pallares y Asociados te ayudaremos
+            cualquiera sea tu objetivo.
+        </p></div>
+        <div class="subdivision object">
+        <div class="services-group">
+            <div class="services-subgroup">
+            <a href="/ventas" class="services"><h4>COMPRAR</h4></a>
+            <a href="https://api.whatsapp.com/send?phone=+59899485699" class="services"><h4>VENDER</h4></a>
+            </div>
+            <div class="services-subgroup">
+            <a href="/alquiler" class="services"><h4>ALQUILAR</h4></a>
+            <a href="https://api.whatsapp.com/send?phone=+59899485699" class="services"><h4>ADMINISTRAR</h4></a>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+
+<div class="father" style="background-color: rgb(255, 255, 255);">
+    <div id="division-2" class="division division-2">
+        <div class="subdivision object invisible">
+            <h2 style="color: rgb(1, 167, 1);">Nos gusta estar cerca...</h2>
+            <p>Siguenos en nuestras redes sociales.</p>
+        </div>
+        <div class="subdivision-row object invisible">
+            <div class="socialmedia">
+            <a href="https://api.whatsapp.com/send?phone=+59899485699" target="_blank">
+                <img src="{{url_for('static', filename='whatsapp.png')}}" alt="" width="100%"></a>
+            <a href="https://facebook.com/pallaresyasociados" target="_blank">
+                <img src="{{url_for('static', filename='facebook.png')}}" alt="" width="100%"></a>
+            <a href="https://twitter.com/@pallaresyasocia" target="_blank">
+            <img src="{{url_for('static', filename='twitter.png')}}" alt="" width="100%"></a>
+        </div>
+        </div>
+    </div>
+    </div>
+
+    
+
+
+
+
+
+</div>
+{% endblock %}
