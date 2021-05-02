@@ -74,7 +74,7 @@ class PropertyForm(FlaskForm):
     baños = SelectField('Baños',choices=['1','2','3+'],validators=[DataRequired()])
     direccion = StringField('Direccion',validators=[Optional()])
     dormitorios = SelectField('Dormitorios',choices=['No','1','2','3','4','5+'],validators=[DataRequired()])
-    descripcion = TextAreaField('Descripcion', validators=[InputRequired(),Length(max=600, message='Demasiado largo')],render_kw={"rows": 10, "cols": 50})
+    descripcion = TextAreaField('Descripcion', validators=[InputRequired(),Length(max=1500, message='Demasiado largo')],render_kw={"rows": 10, "cols": 50})
     permuta = RadioField('Permuta',coerce=int,choices=[(0,'No'),(1,'Si'),(2,'Preguntar')],validators=[Optional()])
     financia = RadioField('Financia',coerce=int,choices=[(0,'No'),(1,'Si'),(2,'Preguntar')],validators=[Optional()])
     destacado = BooleanField('Destacado')

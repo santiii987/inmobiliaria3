@@ -2,13 +2,14 @@ from main import db
 from .subscribers import *
 from .adm import *
 class Properties(db.Model):
-    __bind_key__ = 'admin_db'
+    #__bind_key__ = 'admin_db'
     id = db.Column(db.Integer, primary_key=True)
-    titulo = db.Column(db.String(40), nullable = False)
+    titulo = db.Column(db.String(50), nullable = False)
     fecha_publicacion = db.Column(db.String(10), nullable = False)
     #cargar en us$ o en $ y usar CurrencyConverter para cargar el otro
     precio_dolares = db.Column(db.Integer)
     precio_pesos = db.Column(db.Integer)
+    gastos_comunes = db.Column(db.String)
     barrio_id = db.Column(db.Integer,db.ForeignKey('barrios.id'), nullable = False)
     operacion_id = db.Column(db.Integer,db.ForeignKey('operaciones.id'), nullable = False)
     tipo_propiedad_id = db.Column(db.Integer,db.ForeignKey('tipo_propiedad.id'), nullable = False)
@@ -33,7 +34,7 @@ class Properties(db.Model):
     disposicion = db.Column(db.String(30), nullable = False)
     ######
     distancia_al_mar = db.Column(db.Integer)
-    descripcion = db.Column(db.String(600), nullable = False)
+    descripcion = db.Column(db.String(2000), nullable = False)
     direccion = db.Column(db.String(30))
     propietario_id = db.Column(db.Integer, db.ForeignKey('propietarios.id'), nullable = False)
     #phone = db.Column(db.Integer, nullable = False, unique = True)
@@ -43,7 +44,7 @@ class Properties(db.Model):
     barrio = db.relationship('Barrios',backref='properties',lazy = 'joined')
 
 class Propietarios(db.Model):
-    __bind_key__ = 'admin_db'
+    #__bind_key__ = 'admin_db'
     id = db.Column(db.Integer, primary_key = True)
     nombre = db.Column(db.String(40), nullable = False)
     apellido = db.Column(db.String(40), nullable = False)
@@ -51,24 +52,24 @@ class Propietarios(db.Model):
     telefono = db.Column(db.Integer, nullable = False, unique = True)
 
 class Barrios(db.Model):
-    __bind_key__ = 'admin_db'
+    #__bind_key__ = 'admin_db'
     id = db.Column(db.Integer, primary_key=True)
     barrio = db.Column(db.String(60), nullable = False, unique = True)
 
 class Operaciones(db.Model):
-    __bind_key__ = 'admin_db'
+    #__bind_key__ = 'admin_db'
     id = db.Column(db.Integer, primary_key=True)
     operacion = db.Column(db.String(10), nullable = False, unique = True)
    
 
 
 class Tipo_propiedad(db.Model):
-    __bind_key__ = 'admin_db'
+    #__bind_key__ = 'admin_db'
     id = db.Column(db.Integer, primary_key=True)
     tipo_propiedad = db.Column(db.String(30), nullable = False, unique = True)
 
 class Seguridad(db.Model):
-    __bind_key__ = 'admin_db'
+    #__bind_key__ = 'admin_db'
     id = db.Column(db.Integer,db.ForeignKey('properties.id'), primary_key = True, autoincrement=True)
     alarma = db.Column(db.Boolean)
     cámaras_cctv = db.Column(db.Boolean)
@@ -80,7 +81,7 @@ class Seguridad(db.Model):
     propiedad = db.relationship('Properties',backref='seguridad',lazy = 'select')
 
 class Comfort(db.Model):
-    __bind_key__ = 'admin_db'
+    #__bind_key__ = 'admin_db'
     id = db.Column(db.Integer,db.ForeignKey('properties.id'), primary_key = True, autoincrement=True)
     agua_caliente = db.Column(db.Boolean)
     aire_acondicionado = db.Column(db.Boolean)
@@ -124,23 +125,23 @@ class Comfort(db.Model):
     propiedad = db.relationship('Properties',backref='comfort',lazy = 'select')
 
 # db.drop_all()
-# db.create_all()
+db.create_all()
 
-# array = ('Aguada','Aires Puros','Arroyo Seco','Atahualpa','Bañados de Carrasco','Barra de Carrasco','Barrio Sur','Bella Italia','Bella Vista','Belvedere','Bolivar','Brazo Oriental','Buceo','Camino Maldonado','Capurro','Capurro Bella Vista','Carrasco','Carrasco Barrios con seguridad privada','Carrasco Este','Carrasco Norte','Casabó','Casabó Pajas Blancas','Casavalle','Centro','Cerrito','Cerro','Ciudad Vieja','Colón','Conciliación','Cordón','Flor de maroñas','Goes','Golf','Ituzango','Jacinto Vera','Jardines del Hipódromo','La Blanqueada','La Caleta','La Colorada','La Comercial','La Figurita ','La Paloma Tomkinson','La Teja','Larrañaga','Las Acacias','Las Canteras','Lezica','Malvín ','Malvín Norte','Manga ','Marconi','Maroñas','Melilla','Mercado Modelo','Montevideo (en general)','Nuevo Paris','Pajas Blancas','Palermo','Parque Batlle','Parque Miramar','Parque Rodó','Paso de la Arena','Paso Molino','Peñarol','Peñarol Lavalleja','Perez Castellanos ','Piedras Blancas','Pocitos','Pocitos Nuevo','Prado','Prado Nueva Savona','Puerto','Puerto Buceo','Punta Carretas','Punta Espinillo','Punta Gorda','Punta de Rieles','Reducto','Santiago Vazquez','Sayago','Tres Cruces','Tres Ombues','Unión','Villa Biattitz','Villa Dolores','Villa Española','Villa Garcia Manga Rural','Villa Muñoz','Zona Rural')
-# operaciones = ('Venta','Alquiler')
-# tipo_propiedad = ('Casa','Apartamento','Oficina')
+array = ('Aguada','Aires Puros','Arroyo Seco','Atahualpa','Bañados de Carrasco','Barra de Carrasco','Barrio Sur','Bella Italia','Bella Vista','Belvedere','Bolivar','Brazo Oriental','Buceo','Camino Maldonado','Capurro','Capurro Bella Vista','Carrasco','Carrasco Barrios con seguridad privada','Carrasco Este','Carrasco Norte','Casabó','Casabó Pajas Blancas','Casavalle','Centro','Cerrito','Cerro','Ciudad Vieja','Colón','Conciliación','Cordón','Flor de maroñas','Goes','Golf','Ituzango','Jacinto Vera','Jardines del Hipódromo','La Blanqueada','La Caleta','La Colorada','La Comercial','La Figurita ','La Paloma Tomkinson','La Teja','Larrañaga','Las Acacias','Las Canteras','Lezica','Malvín ','Malvín Norte','Manga ','Marconi','Maroñas','Melilla','Mercado Modelo','Montevideo (en general)','Nuevo Paris','Pajas Blancas','Palermo','Parque Batlle','Parque Miramar','Parque Rodó','Paso de la Arena','Paso Molino','Peñarol','Peñarol Lavalleja','Perez Castellanos ','Piedras Blancas','Pocitos','Pocitos Nuevo','Prado','Prado Nueva Savona','Puerto','Puerto Buceo','Punta Carretas','Punta Espinillo','Punta Gorda','Punta de Rieles','Reducto','Santiago Vazquez','Sayago','Tres Cruces','Tres Ombues','Unión','Villa Biattitz','Villa Dolores','Villa Española','Villa Garcia Manga Rural','Villa Muñoz','Zona Rural')
+operaciones = ('Venta','Alquiler')
+tipo_propiedad = ('Casa','Apartamento','Oficina')
 
-# for arr in array:
-#    caca = Barrios(barrio = arr)
-#    db.session.add(caca)
-#    db.session.commit()
+for arr in array:
+   caca = Barrios(barrio = arr)
+   db.session.add(caca)
+   db.session.commit()
 
-# for arr in operaciones:
-#    caca = Operaciones(operacion = arr)
-#    db.session.add(caca)
-#    db.session.commit()
+for arr in operaciones:
+   caca = Operaciones(operacion = arr)
+   db.session.add(caca)
+   db.session.commit()
 
-# for arr in tipo_propiedad:
-#    caca = Tipo_propiedad(tipo_propiedad = arr)
-#    db.session.add(caca)
-#    db.session.commit()
+for arr in tipo_propiedad:
+   caca = Tipo_propiedad(tipo_propiedad = arr)
+   db.session.add(caca)
+   db.session.commit()
